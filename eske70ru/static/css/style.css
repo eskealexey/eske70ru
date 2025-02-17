@@ -1,6 +1,9 @@
 body {
     background: linear-gradient(to right, #333333, #aaaaaa, #333333); /* Фиолетовый градиент */
+}
 
+header {
+    background: linear-gradient(to right, #cccccc, #aaaaaa, #333333); /* Фиолетовый градиент */
 }
 
 header {
@@ -8,5 +11,10 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-
 }
+.custom-rounded {
+        border-radius: 10px; /* Установите нужное значение радиуса */
+    }
+.custom-margin {
+        margin: 5px; /* Установите нужное значение отступа */
+    }

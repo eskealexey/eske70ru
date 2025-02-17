@@ -10,22 +10,81 @@
     <link rel="icon" href="data:;base64,=">
 </head>
 <body>
-    <section class="container border">
+    <section class="container">
         <header class="row">
-header
+            <div class="col-12 g-0">
+                <span class="logo">ESKE&FAM</span>
+            </div>
 
+        <div class="row">
+            <div class="col-6 g-0">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary  custom-rounded">
+                  <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Ссылка</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Выпадающий список
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Действие</a></li>
+                            <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                          </ul>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </nav>
+            </div>
+            <div class="col-3 ">
+
+            </div>
+            <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
+                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Вход </button>
+                <b> &nbsp; | &nbsp; </b>
+                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Регистрация </button>
+            </div>
+        </div>
         </header>
     </section>
-    <section class="container border">
+
+    <section class="container">
         <div class="row">
-            <div class="col-3 border">left</div>
-            <div class="col-6 border">main</div>
-            <div class="col-3 border">right</div>
+            <div class="col-2 bg-body-tertiary">
+                <div class="gx-1">
+                left
+                </div>
+            </div>
+            <div class="col-8 bg-body-secondary">
+                <div class="gx-1">
+                left
+                </div>
+            </div>
+            <div class="col-2 bg-body-tertiary">
+                <div class="gx-1">
+                left
+                </div>
+            </div>
         </div>
     </section>
-<section class="container border">
+
+    <p></p>
+
+<section class="container bg-body-tertiary  custom-rounded">
     footer
 </section>
-
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

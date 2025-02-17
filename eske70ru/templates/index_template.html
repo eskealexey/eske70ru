@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+    <link rel="icon" href="data:;base64,=">
+</head>
+<body>
+    <section class="container border">
+        <header class="row">
+header
+
+        </header>
+    </section>
+    <section class="container border">
+        <div class="row">
+            <div class="col-3 border">left</div>
+            <div class="col-6 border">main</div>
+            <div class="col-3 border">right</div>
+        </div>
+    </section>
+<section class="container border">
+    footer
+</section>
+
+</body>
+</html>

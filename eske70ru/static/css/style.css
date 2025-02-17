@@ -1,0 +1,12 @@
+body {
+    background: linear-gradient(to right, #333333, #aaaaaa, #333333); /* Фиолетовый градиент */
+
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+
+}

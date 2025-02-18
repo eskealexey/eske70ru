@@ -11,14 +11,14 @@
 </head>
 <body>
     <section class="container">
-        <header class="row">
+        <header class="row custom-rounded">
             <div class="col-12 g-0">
                 <span class="logo">ESKE&FAM</span>
             </div>
 
         <div class="row">
             <div class="col-6 g-0">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary  custom-rounded">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary custom-rounded">
                   <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
                       <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,9 @@
             <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
                 <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Вход </button>
                 <b> &nbsp; | &nbsp; </b>
+                <a href="{% url 'register' %}">
                 <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Регистрация </button>
+                </a>
             </div>
         </div>
         </header>
@@ -62,17 +64,20 @@
 
     <section class="container">
         <div class="row">
-            <div class="col-2 bg-body-tertiary">
+            <div class="col-2 bg-body-secondary custom-rounded">
                 <div class="gx-1">
                 left
                 </div>
             </div>
-            <div class="col-8 bg-body-secondary">
+            <div class="col-8 bg-body-tertiary custom-rounded">
                 <div class="gx-1">
-                left
+{% block content %}
+
+{% endblock %}
+
                 </div>
             </div>
-            <div class="col-2 bg-body-tertiary">
+            <div class="col-2 bg-body-secondary custom-rounded">
                 <div class="gx-1">
                 left
                 </div>
@@ -80,11 +85,11 @@
         </div>
     </section>
 
-    <p></p>
+    <footer class="container bg-body-tertiary  custom-rounded d-flex justify-content-center align-items-center">
+                        footer
+    </footer>
 
-<section class="container bg-body-tertiary  custom-rounded">
-    footer
-</section>
+
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

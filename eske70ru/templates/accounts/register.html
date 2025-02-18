@@ -1,0 +1,35 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4  bg-secondary" style="width: 100%; max-width: 400px;">
+            <h2 class="card-title text-center mb-4">Регистрация</h2>
+            <form>
+                <!-- Поле для имени пользователя -->
+                <div class="mb-3">
+                    <label class="form-label">Имя пользователя</label><br>
+                    {{ form.username }}
+                </div>
+                <!-- Поле для электронной почты -->
+                <div class="mb-3">
+                    <label class="form-label">Электронная почта</label><br>
+                    {{ form.email }}
+                </div>
+                <!-- Поле для пароля -->
+                <div class="mb-3">
+                    <label class="form-label">Пароль</label><br>
+                    {{ form.password1 }}
+                </div>
+                <!-- Поле для подтверждения пароля -->
+                <div class="mb-3">
+                    <label class="form-label">Подтвердите пароль</label><br>
+                {{ form.password2 }}
+                </div>
+
+                <!-- Кнопка отправки формы -->
+                <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

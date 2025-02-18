@@ -1,0 +1,5 @@
+Привет {{ user.username }},
+
+Пожалуйста, перейдите по следующей ссылке, чтобы активировать ваш аккаунт:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}

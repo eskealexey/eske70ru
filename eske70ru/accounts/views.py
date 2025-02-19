@@ -1,4 +1,5 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
@@ -7,11 +8,12 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .models import CustomUser
 
 
 def register(request):
+    """Регистрация"""
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -40,6 +42,7 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 def activate(request, uidb64, token):
+    """Активация аккаунта"""
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = CustomUser.objects.get(pk=uid)
@@ -57,4 +60,27 @@ def activate(request, uidb64, token):
 
 
 def confirm_email(request):
+    """Подтверждение email"""
     return render(request, 'accounts/confirm_email.html')
+
+
+def login_view(request):
+    """Аутентификация пользователя"""
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password, is_verified=True)
+            if user is not None:
+                login(request, user)
+                return redirect('home')  # Перенаправление на главную страницу
+    else:
+        form = AuthenticationForm()
+    return render(request, 'accounts/login.html', {'form': form})
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')  # Перенаправление на главную страницу

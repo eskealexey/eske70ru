@@ -26,7 +26,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                          <a class="nav-link active" aria-current="page" href="/">Главная</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#">Ссылка</a>
@@ -51,13 +51,27 @@
             <div class="col-3 ">
 
             </div>
+             {% if user.is_authenticated %}
             <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
+                <a href="{% url 'login' %}">
+                {{ user.username}}
+                </a>
+                <b> &nbsp; | &nbsp; </b>
+                <a href="{% url 'logout' %}">
+                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Выйти</button>
+                </a>
+            </div>
+            {% else %}
+            <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
+                <a href="{% url 'login' %}">
                 <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Вход </button>
+                </a>
                 <b> &nbsp; | &nbsp; </b>
                 <a href="{% url 'register' %}">
                 <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Регистрация </button>
                 </a>
             </div>
+            {% endif %}
         </div>
         </header>
     </section>
@@ -79,7 +93,7 @@
             </div>
             <div class="col-2 bg-body-secondary custom-rounded">
                 <div class="gx-1">
-                left
+                    {{ user.email }}
                 </div>
             </div>
         </div>

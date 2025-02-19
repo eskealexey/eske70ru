@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-from .conf import Email, Password_Email
+from .conf import Email, Password_Email, Django_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)^f#kg=fx(#%ch06fab7mc2+5icqqa!y%2-7jw%agci^yd)f$3'
+SECRET_KEY = Django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

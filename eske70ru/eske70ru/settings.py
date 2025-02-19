@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from .conf import Email, Password_Email
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,8 +32,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Например, 'smtp.gmail.com' для Gmail
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'eskealexey@gmail.com'
-EMAIL_HOST_PASSWORD = 'zsiv isiw giaa rjmv '
+EMAIL_HOST_USER = Email
+EMAIL_HOST_PASSWORD = Password_Email
 LOGIN_URL = 'login'  # URL для входа
 LOGIN_REDIRECT_URL = 'home'  # URL после успешного входа
 

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'accounts',
+    'programs',
 ]
 
 SITE_ID = 1  # Укажите ID вашего сайта

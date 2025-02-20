@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce import models as tinymce_models
 
 # Create your models here.
 class Platforms(models.Model):
@@ -19,10 +20,10 @@ class Languages(models.Model):
 class Program(models.Model):
     """Модель программы"""
     name = models.CharField(max_length=200, verbose_name='Название')
-    short_description = models.TextField(verbose_name='Краткое описание')
+    short_description = models.CharField(max_length=200, verbose_name='Краткое описание')
     platforms = models.ForeignKey(Platforms, on_delete=models.CASCADE, verbose_name='Платформа')
     languages = models.ForeignKey(Languages, on_delete=models.CASCADE, verbose_name='Язык программирования')
-    description = models.TextField(verbose_name='Описание')
+    description = tinymce_models.HTMLField(blank=True, verbose_name='Описание')
     image = models.ImageField(upload_to='programs/img/', verbose_name='Изображение')
     file = models.FileField(upload_to='programs/files/', verbose_name='Файл')
 

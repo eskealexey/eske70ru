@@ -19,3 +19,13 @@ header {
 .custom-margin {
         margin: 5px; /* Установите нужное значение отступа */
     }
+
+#text {
+  text-indent: 20px;
+  width: 100%;
+  margin: 5px 0px 5px 0px;
+  padding: 5px 15px 5px 15px;
+  font-family: Verdana, Helvetica, sans-serif,  Arial,"Times New Roman";
+  font-style: italic;
+  text-align: justify;
+}

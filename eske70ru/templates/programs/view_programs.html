@@ -1,20 +1,31 @@
 {% extends 'index_template.html' %}
 
 {% block content %}
+ <p id="text">
+Сейчас компьютеры прочно заняли место в наших домах. Большие вычислительные мощности современных процессоров,
+  способных выводить трехмерные изображения формируемые мощными видеокартами, уже не кажутся чем то необычным.
+  В геометрической прогрессии растут объемы жестких дисков, усовершенствуются технологии изготовления памяти ОЗУ.
+  Все это происходит на фоне удешевления компьютеров. Но все эти достижения «компьютеростроителей» останутся обычным
+  «железом», если не будет программного обеспечения, которое «оживит» их. На этой странице размещены
+  (и будут далее размещаться) программы для компьютера написанные автором.
+</p>
+
 {% for program in programs %}
+<div class="container">
 <div class="card mb-3" style="max-width: 100%;">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="{{ program.image }}" class="img-fluid rounded-start" alt="...">
+      <img src="/media/{{ program.image }}" class="img-fluid rounded-start" alt="{{ program.name }}" >
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{ program.name }}</h5>
         <p class="card-text">{{ program.short_description }}</p>
-        <p class="card-text"><small class="text-body-secondary">Последнее обновление 3 мин. назад</small></p>
+        <p class="card-text"><small class="text-body-secondary">Последнее обновление 3 мин. Назад</small></p>
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endfor %}
 

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tinymce',
+    'django_ckeditor_5',
     'main',
     'accounts',
     'programs',
@@ -87,62 +87,105 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eske70ru.wsgi.application'
 
-# TINYMCE_DEFAULT_CONFIG = {
-#     'height': 360,
-#     'width': 800,
-#     'cleanup_on_startup': True,
-#     'custom_undo_redo_levels': 20,
-#     'selector': 'textarea',
-#     'theme': 'modern',
-#     'plugins': '''
-#         textcolor save link image media preview codesample contextmenu
-#         table code lists fullscreen insertdatetime nonbreaking
-#         contextmenu directionality searchreplace wordcount visualblocks
-#         visualchars code fullscreen autolink lists charmap print hr
-#         anchor pagebreak
-#     ''',
-#     'toolbar1': '''
-#         fullscreen preview bold italic underline | fontselect,
-#         fontsizeselect | forecolor backcolor | alignleft alignright |
-#         aligncenter alignjustify | indent outdent | bullist numlist table |
-#         | link image media | codesample |
-#     ''',
-#     'toolbar2': '''
-#         visualblocks visualchars |
-#         charmap hr pagebreak nonbreaking anchor | code |
-#     ''',
-#     'contextmenu': 'formats | link image',
-#     'menubar': True,
-#     'statusbar': True,
-# }
+#
+customColorPalette = [
+    {
+        'color': 'hsl(4, 90%, 58%)',
+        'label': 'Red'
+    },
+    {
+        'color': 'hsl(340, 82%, 52%)',
+        'label': 'Pink'
+    },
+    {
+        'color': 'hsl(291, 64%, 42%)',
+        'label': 'Purple'
+    },
+    {
+        'color': 'hsl(262, 52%, 47%)',
+        'label': 'Deep Purple'
+    },
+    {
+        'color': 'hsl(231, 48%, 48%)',
+        'label': 'Indigo'
+    },
+    {
+        'color': 'hsl(207, 90%, 54%)',
+        'label': 'Blue'
+    },
+]
 
-TINYMCE_DEFAULT_CONFIG = {
-    'height': 360,
-    'width': 900,
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 20,
-    'selector': 'textarea',
-    # 'plugins': 'paste,autolink,lists,spellchecker,pagebreak,style,layer,table,save,advlink, image, media, link, emoticons, insertdatetime, preview, searchreplace, print, contextmenu, wordcount, fullscreen, horizontalrule,',
-    # 'plugins': 'paste,spellchecker,style,layer,advlink, media, emoticons, horizontalrule,',
-    'plugins':
-        '''textcolor save link image media preview codesample contextmenu
-        table code fullscreen insertdatetime nonbreaking
-        contextmenu directionality searchreplace wordcount visualblocks
-        visualchars code fullscreen autolink lists charmap print hr
-        anchor pagebreak paste spellchecker style layer advlink media emoticons horizontalrule'''
-    ,
-    'paste_as_text': False,
-    'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
-    'table_default_attributes': {
-           'class': 'table',  # можно использовать классы Bootstrap
-       },
-       'table_default_styles': {
-           'width': '100%',
-           'border': '1px solid #ddd',
-           'border-collapse': 'collapse',
-       },
-       # 'content_css': '/static/app/css/style_app.css',  # путь к вашему CSS
+# CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
+# CKEDITOR_5_FILE_STORAGE = ".storage.CustomStorage" # optional
+CKEDITOR_5_CONFIGS = {
+'default': {
+    'toolbar': {
+        'items': ['heading', '|', 'bold', 'italic', 'link',
+                  'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+                }
+
+},
+'extends': {
+    'blockToolbar': [
+        'paragraph', 'heading1', 'heading2', 'heading3',
+        '|',
+        'bulletedList', 'numberedList',
+        '|',
+        'blockQuote',
+    ],
+    'toolbar': {
+        'items': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                  'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                'insertTable',
+                ],
+        'shouldNotGroupWhenFull': True
+    },
+    'image': {
+        'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                    'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+        'styles': [
+            'full',
+            'side',
+            'alignLeft',
+            'alignRight',
+            'alignCenter',
+        ]
+
+    },
+    'table': {
+        'contentToolbar': [ 'tableColumn', 'tableRow', 'mergeTableCells',
+        'tableProperties', 'tableCellProperties' ],
+        'tableProperties': {
+            'borderColors': customColorPalette,
+            'backgroundColors': customColorPalette
+        },
+        'tableCellProperties': {
+            'borderColors': customColorPalette,
+            'backgroundColors': customColorPalette
+        }
+    },
+    'heading' : {
+        'options': [
+            { 'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph' },
+            { 'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1' },
+            { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
+            { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
+        ]
+    }
+},
+'list': {
+    'properties': {
+        'styles': 'true',
+        'startIndex': 'true',
+        'reversed': 'true',
+    }
 }
+}
+# Define a constant in settings.py to specify file upload permissions
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

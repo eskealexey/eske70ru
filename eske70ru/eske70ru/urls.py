@@ -22,15 +22,10 @@ from eske70ru import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('', include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('programs/', include('programs.urls')),
-    # path('accounts/profile/', include('main.urls')),
-    # path('accounts/profile/edit/', include('main.urls')),
-    # path('accounts/profile/delete/', include('main.urls')),
-    # path('accounts/profile/change_password/', include('main.urls')),
-    # path('accounts/profile/change_email/', include('main.urls')),
-    # path('accounts/profile/change_username/', include('main.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

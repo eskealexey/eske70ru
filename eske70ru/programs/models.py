@@ -1,5 +1,17 @@
 from django.db import models
-from tinymce import models as tinymce_models
+# from tinymce import models as tinymce_models
+
+from django_ckeditor_5.fields import CKEditor5Field
+
+
+# class Article(models.Model):
+#     title = models.CharField(max_length=200)
+#     content = RichTextField()
+
+
+
+
+
 
 # Create your models here.
 class Platforms(models.Model):
@@ -23,7 +35,9 @@ class Program(models.Model):
     short_description = models.CharField(max_length=200, verbose_name='Краткое описание')
     platforms = models.ForeignKey(Platforms, on_delete=models.CASCADE, verbose_name='Платформа')
     languages = models.ForeignKey(Languages, on_delete=models.CASCADE, verbose_name='Язык программирования')
-    description = tinymce_models.HTMLField(blank=True, verbose_name='Описание')
+    # description = tinymce_models.HTMLField(blank=True, verbose_name='Описание')
+    description = CKEditor5Field('Text', config_name='extends')
+    # description = models.TextField(blank=True, verbose_name='Описание')
     image = models.ImageField(upload_to='programs/img/', verbose_name='Изображение')
     file = models.FileField(upload_to='programs/files/', verbose_name='Файл')
 

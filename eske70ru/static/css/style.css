@@ -19,6 +19,11 @@ header {
 .custom-margin {
         margin: 5px; /* Установите нужное значение отступа */
     }
+p {
+ text-indent: 20px;
+ padding: 5px 0px;
+ text-align: justify;
+}
 
 #text {
   text-indent: 20px;

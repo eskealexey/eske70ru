@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+
+
 from .conf import Email, Password_Email, Django_key
+from programs.apps import ProgramsConfig
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -116,7 +119,9 @@ customColorPalette = [
 ]
 
 # CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
-# CKEDITOR_5_FILE_STORAGE = ".storage.CustomStorage" # optional
+if ProgramsConfig.name == 'programs':
+    CKEDITOR_5_FILE_STORAGE = "programs.storage.CustomStorage" # optional
+
 CKEDITOR_5_CONFIGS = {
 'default': {
     'toolbar': {

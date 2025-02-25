@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Program
 
@@ -30,3 +30,22 @@ def program_detail(request, program_id):
         'download': program.file,
     }
     return render(request, 'programs/program_detail.html', context=context)
+
+
+def download_program(request, program_id):
+    """Подсчет количества программ"""
+    print(program_id)
+    count = 0
+    if request.method == 'GET':
+        ip = request.META['REMOTE_ADDR']
+        session = request.session.session_key
+        print(ip, session)
+
+        count += 1
+        print(count)
+    # context = {
+    #     'title': program.name,
+    #     'program': program,
+    #     'download': program.file,
+    # }
+    return redirect('program_detail', program_id)

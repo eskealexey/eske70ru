@@ -5,7 +5,6 @@
 
 <div>{{ program.description|safe }}</div>
 
-<div>{{ download }}</div>
-
+<div><a href="{% url 'download_program' program.id %}">Загрузить программу</a></div>
 
 {% endblock %}

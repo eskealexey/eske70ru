@@ -6,7 +6,7 @@ from .models import Program
 # Create your views here.
 def view_programs(request):
     """Просмотр списка программ"""
-    programs = Program.objects.all()
+    programs = Program.objects.filter(is_active=True)
     if programs:
         context = {
             'title': 'Программы',
@@ -23,8 +23,10 @@ def view_programs(request):
 def program_detail(request, program_id):
     """Просмотр программы"""
     program = Program.objects.get(id=program_id)
+
     context = {
         'title': program.name,
         'program': program,
+        'download': program.file,
     }
     return render(request, 'programs/program_detail.html', context=context)

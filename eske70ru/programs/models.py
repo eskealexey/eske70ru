@@ -28,6 +28,8 @@ class Program(models.Model):
     description = CKEditor5Field('Text', config_name='extends')
     image = models.ImageField(upload_to='programs/img/',  verbose_name='Изображение')
     file = models.FileField(upload_to='programs/files/', verbose_name='Файл')
+    date = models.DateField(auto_now_add=False, verbose_name='Дата добавления', null=True)
+    is_active = models.BooleanField(default=False, verbose_name='Активна')
 
     def __str__(self):
         return self.name

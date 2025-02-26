@@ -21,6 +21,7 @@ class Languages(models.Model):
 
 class Program(models.Model):
     """Модель программы"""
+    objects = None
     name = models.CharField(max_length=200, verbose_name='Название')
     short_description = models.CharField(max_length=200, verbose_name='Краткое описание')
     platforms = models.ForeignKey(Platforms, on_delete=models.CASCADE, verbose_name='Платформа')
@@ -39,3 +40,14 @@ class Program(models.Model):
         verbose_name_plural = 'Программы'
         ordering = ['name']
 
+
+class SoftDownload(models.Model):
+    """Модель скачивания программ"""
+    objects = None
+    program_id = models.IntegerField(verbose_name='ID программы')
+    ip_remote = models.CharField(verbose_name='IP адрес', max_length=15, null=True)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата скачивания', null=True, blank=True)
+    count = models.IntegerField(verbose_name='Количество скачиваний', default=1)
+
+    def __str__(self):
+        return self.ip_remote

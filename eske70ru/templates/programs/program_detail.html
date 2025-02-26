@@ -1,10 +1,25 @@
 {% extends 'index_template.html' %}
 
 {% block content %}
-<h2>{{ program.name }}</h2>
-
-<div>{{ program.description|safe }}</div>
-
-<div><a href="{% url 'download_program' program.id %}">Загрузить программу</a></div>
-
+<h2 class="text-center">{{ program.name }}</h2>
+<hr>
+<div class="container mt-3 mb-3">
+    <div class="col-sm-12">
+        {{ program.description|safe }}
+    </div>
+<hr>
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-sm-4">
+            Количество скачиваний: {{ counter }}
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'download_program' program.id %}">
+                <button type="button" class="btn btn-primary form-control">Загрузить программу</button>
+            </a>
+        </div>
+        <div class="col-sm-4 text-right">
+            Дата публикации: {{ program.date|date:"d.m.Y" }}
+        </div>
+    </div>
+</div>
 {% endblock %}

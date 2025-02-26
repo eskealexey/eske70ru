@@ -50,4 +50,4 @@ class SoftDownload(models.Model):
     count = models.IntegerField(verbose_name='Количество скачиваний', default=1)
 
     def __str__(self):
-        return self.ip_remote
+        return f'{self.ip_remote} -- {Program.objects.get(id=self.program_id).name} : {self.count}'

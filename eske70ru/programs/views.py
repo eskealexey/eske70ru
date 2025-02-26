@@ -12,6 +12,10 @@ from .models import Program, SoftDownload
 def view_programs(request):
     """Вывод списка программ"""
     programs = Program.objects.filter(is_active=True)
+
+    counter = {program.id: SoftDownload.objects.filter(program_id=program.id).count() for program in programs}
+    print(counter)
+
     context = {
         'title': 'Программы',
         'programs': programs if programs else [],
@@ -22,9 +26,15 @@ def view_programs(request):
 def program_detail(request, program_id):
     """Вывод программы"""
     program = get_object_or_404(Program, id=program_id)
+    counter = SoftDownload.objects.filter(program_id=program_id)
+    count = 0
+    for c in counter:
+        count += c.count
+
     context = {
         'title': program.name,
         'program': program,
+        'counter': count,
     }
     return render(request, 'programs/program_detail.html', context=context)
 

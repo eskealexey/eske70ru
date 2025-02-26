@@ -23,8 +23,15 @@
         <div class="card-text "><small class="text-body-secondary">Платформа: <i><u>{{ program.platforms }}</u></i><br>
           Язык программирования: <i><u>{{ program.languages }}</u></i></small></div>
         <p class="card-text">{{ program.short_description }}</p>
-        <p class="card-text text-end"><a href="{% url 'program_detail' program.id %}">
-          <button class="btn btn-secondary btn-sm" type="button">Перейти</button></a></p>
+        <div class="row">
+          <div class="col-md-8">
+            Скачали __ раз
+          </div>
+
+          <div class="col-md-4 text-center">
+            <a href="{% url 'program_detail' program.id %}"><button class="btn btn-secondary btn-sm" type="button">Перейти</button></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

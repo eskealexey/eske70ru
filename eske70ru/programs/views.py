@@ -10,6 +10,7 @@ from .models import Program, SoftDownload
 
 
 def view_programs(request):
+    """Вывод списка программ"""
     programs = Program.objects.filter(is_active=True)
     context = {
         'title': 'Программы',
@@ -19,6 +20,7 @@ def view_programs(request):
 
 
 def program_detail(request, program_id):
+    """Вывод программы"""
     program = get_object_or_404(Program, id=program_id)
     context = {
         'title': program.name,
@@ -28,6 +30,7 @@ def program_detail(request, program_id):
 
 
 def download_program(request, program_id):
+    """Скачивание программы"""
     ip_address = request.META.get('REMOTE_ADDR', '')
     program = get_object_or_404(Program, id=program_id)
 

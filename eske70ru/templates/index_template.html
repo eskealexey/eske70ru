@@ -8,6 +8,24 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
     <link rel="icon" href="data:;base64,=">
+
+     <script>
+        // Функция для обновления времени
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Обновляем время каждую секунду
+        setInterval(updateTime, 1000);
+
+        // Инициализация времени при загрузке страницы
+        updateTime();
+     </script>
+
 </head>
 <body>
     <section class="container">
@@ -16,63 +34,67 @@
                 <span class="logo">ESKE&FAM</span>
             </div>
 
-        <div class="row">
-            <div class="col-6 g-0">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary custom-rounded">
-                  <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="/">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'view_programs' %}">Программы</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Выпадающий список
-                          </a>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Действие</a></li>
-                            <li><a class="dropdown-item" href="#">Другое действие</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+            <div class="row">
+                <div class="col-6 g-0">
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary custom-rounded">
+                      <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link active" aria-current="page" href="/">Главная</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'view_programs' %}">Программы</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Разное
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Проекты</a></li>
+                                <li><a class="dropdown-item" href="#">Модели</a></li>
+    <!--                            <li><hr class="dropdown-divider"></li>-->
+    <!--                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
+                              </ul>
+                            </li>
+
                           </ul>
-                        </li>
+                        </div>
+                      </div>
+                    </nav>
+                </div>
 
-                      </ul>
+                <div class="col-3 d-flex justify-content-center align-items-center">
+                    <div id="clock">
+                        {{ current_time }}
                     </div>
-                  </div>
-                </nav>
-            </div>
-            <div class="col-3 ">
+                </div>
 
+                 {% if user.is_authenticated %}
+                <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
+                    <a href="{% url 'login' %}">
+                    {{ user.username}}
+                    </a>
+                    <b> &nbsp; | &nbsp; </b>
+                    <a href="{% url 'logout' %}">
+                    <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Выйти</button>
+                    </a>
+                </div>
+                {% else %}
+                <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
+                    <a href="{% url 'login' %}">
+                    <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Вход </button>
+                    </a>
+                    <b> &nbsp; | &nbsp; </b>
+                    <a href="{% url 'register' %}">
+                    <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Регистрация </button>
+                    </a>
+                </div>
+                {% endif %}
             </div>
-             {% if user.is_authenticated %}
-            <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
-                <a href="{% url 'login' %}">
-                {{ user.username}}
-                </a>
-                <b> &nbsp; | &nbsp; </b>
-                <a href="{% url 'logout' %}">
-                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Выйти</button>
-                </a>
-            </div>
-            {% else %}
-            <div class="col-3 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
-                <a href="{% url 'login' %}">
-                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Вход </button>
-                </a>
-                <b> &nbsp; | &nbsp; </b>
-                <a href="{% url 'register' %}">
-                <button class="btn btn-secondary" type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Регистрация </button>
-                </a>
-            </div>
-            {% endif %}
-        </div>
         </header>
     </section>
 <p></p>
@@ -80,7 +102,11 @@
         <div class="row">
             <div class="col-2 ">
                 <div class="card gx-1">
-                left
+                    <ul class="list-group">
+                      <li class="list-group-item"><a class="nav-link" href="{% url 'view_programs' %}">Программы</a></li>
+                      <li class="list-group-item">Проекты</li>
+                      <li class="list-group-item">Модели</li>
+                    </ul>
                 </div>
             </div>
             <div class="col-8 bg-body-tertiary custom-rounded">
@@ -92,15 +118,21 @@
                 </div>
             </div>
             <div class="col-2 ">
-                <div class="card gx-1">
-                    {{ user.email }}
-                </div>
+
+                    <div class="card">
+                      <img src="..." class="card-img-top" alt="...">
+
+<!--                        <div id="clock">{{ current_time }}</div>-->
+
+
+                    </div>
+
             </div>
         </div>
     </section>
 <p></p>
     <footer class="container bg-body-tertiary  custom-rounded d-flex justify-content-center align-items-center">
-                        footer
+                        E&F © 2008 - 2025
     </footer>
 
 

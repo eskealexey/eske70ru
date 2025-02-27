@@ -34,3 +34,10 @@ p {
   font-style: italic;
   text-align: justify;
 }
+
+#clock {
+            font-size: 0.8rem;
+            font-family: Arial, sans-serif;
+            text-align: center;
+
+        }

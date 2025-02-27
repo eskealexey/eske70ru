@@ -8,17 +8,17 @@
         {{ program.description|safe }}
     </div>
 <hr>
-    <div class="row d-flex justify-content-center align-items-center">
+    <div class="row d-flex justify-content-center align-items-center" style="margin-top: 20px; font-size: 0.8rem;">
         <div class="col-sm-4">
-            Количество скачиваний: {{ counter }}
+            Количество скачиваний: <b><i><u>{{ counter }}</u></i></b>
         </div>
         <div class="col-sm-4">
             <a href="{% url 'download_program' program.id %}">
                 <button type="button" class="btn btn-primary form-control">Загрузить программу</button>
             </a>
         </div>
-        <div class="col-sm-4 text-right">
-            Дата публикации: {{ program.date|date:"d.m.Y" }}
+        <div class="col-sm-4 text-end">
+            Дата публикации: <b><i><u>{{ program.date|date:"d.m.Y" }}</u></i></b> г.
         </div>
     </div>
 </div>

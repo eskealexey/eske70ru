@@ -12,15 +12,37 @@ from .models import Program, SoftDownload
 def view_programs(request):
     """Вывод списка программ"""
     programs = Program.objects.filter(is_active=True)
-
-    counter = {program.id: SoftDownload.objects.filter(program_id=program.id).count() for program in programs}
-    print(counter)
+    downloads_dict = {
+        program.id: SoftDownload.objects.filter(program_id=program.id)
+        for program in programs
+    }
+    dict_count = {}
+    for program_id, downloads in downloads_dict.items():
+        sch = 0
+        for download in downloads:
+            sch += download.count
+        dict_count[program_id] = sch
+        # print(f"Программа {program_id}: {sch} скачиваний")
+    print(dict_count)
 
     context = {
         'title': 'Программы',
         'programs': programs if programs else [],
+        'count_downloads': dict_count,
     }
     return render(request, 'programs/view_programs.html', context=context)
+# def view_programs(request):
+#     """Вывод списка программ"""
+#     programs = Program.objects.filter(is_active=True).annotate(
+#         total_downloads=Sum('softdownload__count')
+#     )
+#
+#     context = {
+#         'title': 'Программы',
+#         'programs': programs,
+#         'count_downloads': {program.id: program.total_downloads or 0 for program in programs},
+#     }
+#     return render(request, 'programs/view_programs.html', context=context)
 
 
 def program_detail(request, program_id):

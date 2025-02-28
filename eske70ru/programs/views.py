@@ -22,7 +22,6 @@ def view_programs(request):
         for download in downloads:
             sch += download.count
         dict_count[program_id] = sch
-        # print(f"Программа {program_id}: {sch} скачиваний")
     print(dict_count)
 
     context = {

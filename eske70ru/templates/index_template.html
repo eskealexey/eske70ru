@@ -26,6 +26,7 @@
         updateTime();
      </script>
 
+
 </head>
 <body>
     <section class="container">
@@ -67,9 +68,12 @@
                     </nav>
                 </div>
 
-                <div class="col-3 d-flex justify-content-center align-items-center">
+                <div class="col-3  border bg-body-dark text-white bg-dark custom-rounded d-flex justify-content-center">
+                    <div class="row">
+                    <div class="text-center" id="date-container"></div>
                     <div id="clock">
                         {{ current_time }}
+                    </div>
                     </div>
                 </div>
 
@@ -138,5 +142,34 @@
 
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
  <script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Функция для форматирования даты
+        function getCurrentDate() {
+            const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+            const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+
+            const now = new Date();
+
+            const dayOfWeek = days[now.getDay()];
+            const date = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+
+            return `${dayOfWeek}, ${date} ${month} ${year} г.`;
+        }
+
+        // Вставка даты в контейнер
+        const container = document.getElementById('date-container');
+        container.textContent = getCurrentDate();
+
+        // Обновление времени каждую минуту (опционально)
+        setInterval(() => {
+            container.textContent = getCurrentDate();
+        }, 60000);
+    });
+</script>
 </body>
 </html>

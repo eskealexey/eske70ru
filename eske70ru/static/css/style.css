@@ -36,8 +36,36 @@ p {
 }
 
 #clock {
-            font-size: 0.8rem;
-            font-family: Arial, sans-serif;
-            text-align: center;
+    font-size: 0.8rem;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
 
-        }
+#scrollToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    align-items: center;     /* Вертикальное выравнивание */
+    justify-content: center; /* Горизонтальное выравнивание */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: none;
+    }
+
+#scrollToTop svg {
+    width: 100%;        /* Размер иконки относительно кнопки */
+    height: 100%;
+    display: block;    /* Убираем лишние отступы */
+}
+
+/* Опционально: анимация при наведении */
+#scrollToTop:hover svg {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+}

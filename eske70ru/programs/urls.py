@@ -1,5 +1,5 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
+
 from .views import view_programs, program_detail, download_program
 
 urlpatterns = [

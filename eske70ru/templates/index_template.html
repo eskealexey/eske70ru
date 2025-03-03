@@ -31,10 +31,9 @@
 <body>
     <section class="container">
         <header class="row custom-rounded">
-            <div class="col-12 g-0">
-                <span class="logo">ESKE&FAM</span>
-            </div>
-
+             <svg width="200" height="80" xmlns="http://www.w3.org/2000/svg">
+                <text x="10" y="60" font-family="Arial" font-size="50" fill="green">ESKE&FAM</text>
+            </svg>
             <div class="row">
                 <div class="col-6 g-0">
                     <nav class="navbar navbar-expand-lg bg-body-tertiary custom-rounded">
@@ -134,14 +133,43 @@
             </div>
         </div>
     </section>
-<p></p>
+<div class="container text-center">
+<button id="scrollToTop" class="text-center">
+    <svg viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="2"
+              d="M12 6v12m0-12l-5 5m5-5l5 5"/>
+    </svg>
+</button>
+    <script>
+        // Получаем кнопку
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        // Показываем кнопку при прокрутке вниз
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        };
+
+        // Функция для прокрутки вверх
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Плавная прокрутка
+            });
+        };
+    </script>
+
+</div>
     <footer class="container bg-body-tertiary  custom-rounded d-flex justify-content-center align-items-center">
                         E&F © 2008 - 2025
     </footer>
 
 
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
- <script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>
+<script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Функция для форматирования даты

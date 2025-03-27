@@ -1,6 +1,5 @@
 from django.db import models
-
-from django_ckeditor_5.fields import CKEditor5Field
+from tinymce.models import HTMLField
 
 
 # Create your models here.
@@ -26,7 +25,7 @@ class Program(models.Model):
     short_description = models.CharField(max_length=200, verbose_name='Краткое описание')
     platforms = models.ForeignKey(Platforms, on_delete=models.CASCADE, verbose_name='Платформа')
     languages = models.ForeignKey(Languages, on_delete=models.CASCADE, verbose_name='Язык программирования')
-    description = CKEditor5Field('Text', config_name='extends')
+    description = HTMLField(verbose_name='Описание', blank=True)
     image = models.ImageField(upload_to='programs/img/',  verbose_name='Изображение')
     file = models.FileField(upload_to='programs/files/', verbose_name='Файл')
     date = models.DateField(auto_now_add=False, verbose_name='Дата добавления', null=True)

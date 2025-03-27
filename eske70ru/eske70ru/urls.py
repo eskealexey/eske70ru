@@ -16,16 +16,21 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import path, include
+from filebrowser.sites import site
 
 from eske70ru import settings
 
 urlpatterns = [
+    path('admin/filebrowser/', site.urls),
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
-    path("ckeditor5/", include('django_ckeditor_5.urls')),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('programs/', include('programs.urls')),
+    path('projects/', include('projects.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

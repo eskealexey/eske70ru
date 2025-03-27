@@ -8,7 +8,6 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
     <link rel="icon" href="data:;base64,=">
-<!--    <script src="{% static 'django_ckeditor_5/src/ckeditor.js' %}"></script>-->
      <script>
         // Функция для обновления времени
         function updateTime() {
@@ -31,9 +30,28 @@
 <body>
     <section class="container">
         <header class="row custom-rounded">
-             <svg width="200" height="80" xmlns="http://www.w3.org/2000/svg">
-                <text x="10" y="60" font-family="Arial" font-size="50" fill="green">ESKE&FAM</text>
-            </svg>
+            <div class="row">
+                <div class="col-md-6 col-12 g-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 60">
+                      <style>
+                        .text {
+                          font-family: 'Arial', sans-serif;
+                          font-size: 40px;
+                          font-weight: bold;
+                          fill: #333;
+                        }
+                        .amp {
+                          font-style: italic;
+                          fill: #666;
+                        }
+                      </style>
+                      <text x="10" y="40" class="text">Eske<tspan class="amp">&amp;</tspan>Fam</text>
+                    </svg>
+                </div>
+                <div class="col-md-6 col-12 g-0">
+
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6 col-12 g-0">
                     <nav class="navbar navbar-expand-lg bg-body-tertiary custom-rounded">
@@ -54,8 +72,8 @@
                                 Разное
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Проекты</a></li>
-                                <li><a class="dropdown-item" href="#">Модели</a></li>
+                                <li><a class="dropdown-item" href="{% url 'view_projects' %}">Проекты</a></li>
+                                <li><a class="dropdown-item" href="#">Модели 3D</a></li>
     <!--                            <li><hr class="dropdown-divider"></li>-->
     <!--                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
                               </ul>
@@ -107,8 +125,8 @@
                 <div class="card gx-1">
                     <ul class="list-group">
                       <li class="list-group-item"><a class="nav-link" href="{% url 'view_programs' %}">Программы</a></li>
-                      <li class="list-group-item">Проекты</li>
-                      <li class="list-group-item">Модели</li>
+                      <li class="list-group-item"><a class="nav-link" href="{% url 'view_projects' %}"> Проекты</a></li>
+                      <li class="list-group-item">Модели 3D</li>
                     </ul>
                 </div>
             </div>
@@ -163,15 +181,13 @@
     </script>
 
 </div>
+    <p></p>
     <footer class="container bg-body-tertiary  custom-rounded d-flex justify-content-center align-items-center">
                         E&F © 2008 - 2025
     </footer>
 
 
-<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>
-
-
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Функция для форматирования даты

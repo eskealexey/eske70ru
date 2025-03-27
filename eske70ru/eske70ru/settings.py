@@ -43,6 +43,8 @@ LOGIN_REDIRECT_URL = 'home'  # URL после успешного входа
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
@@ -50,10 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_ckeditor_5',
+    'tinymce',
     'main',
     'accounts',
     'programs',
+    'projects',
 ]
 
 SITE_ID = 1  # Укажите ID вашего сайта
@@ -91,107 +94,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'eske70ru.wsgi.application'
 
 #
-customColorPalette = [
-    {
-        'color': 'hsl(4, 90%, 58%)',
-        'label': 'Red'
-    },
-    {
-        'color': 'hsl(340, 82%, 52%)',
-        'label': 'Pink'
-    },
-    {
-        'color': 'hsl(291, 64%, 42%)',
-        'label': 'Purple'
-    },
-    {
-        'color': 'hsl(262, 52%, 47%)',
-        'label': 'Deep Purple'
-    },
-    {
-        'color': 'hsl(231, 48%, 48%)',
-        'label': 'Indigo'
-    },
-    {
-        'color': 'hsl(207, 90%, 54%)',
-        'label': 'Blue'
-    },
-]
-
-# CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
-if ProgramsConfig.name == 'programs':
-    CKEDITOR_5_FILE_STORAGE = "programs.storage.CustomStorage" # optional
-
-CKEDITOR_5_CONFIGS = {
-'default': {
-    'toolbar': {
-        'items': ['heading', '|', 'bold', 'italic', 'link',
-                  'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
-                }
-
-},
-'extends': {
-    'blockToolbar': [
-        'paragraph', 'heading1', 'heading2', 'heading3',
-        '|',
-        'bulletedList', 'numberedList',
-        '|',
-        'blockQuote',
-    ],
-    'toolbar': {
-        'items': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
-                  'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
-                'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
-                'insertTable',
-                ],
-        'shouldNotGroupWhenFull': True
-    },
-    'image': {
-        'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
-                    'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
-        'styles': [
-            'full',
-            'side',
-            'alignLeft',
-            'alignRight',
-            'alignCenter',
-        ]
-
-    },
-    'table': {
-        'contentToolbar': [ 'tableColumn', 'tableRow', 'mergeTableCells',
-        'tableProperties', 'tableCellProperties' ],
-        'tableProperties': {
-            'borderColors': customColorPalette,
-            'backgroundColors': customColorPalette
-        },
-        'tableCellProperties': {
-            'borderColors': customColorPalette,
-            'backgroundColors': customColorPalette
-        }
-    },
-    'heading' : {
-        'options': [
-            { 'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph' },
-            { 'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1' },
-            { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
-            { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
-        ]
-    }
-},
-'list': {
-    'properties': {
-        'styles': 'true',
-        'startIndex': 'true',
-        'reversed': 'true',
-    }
-}
-}
-# Define a constant in settings.py to specify file upload permissions
-CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
-
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -247,5 +149,60 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STATIC_DIR = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [STATIC_DIR]
+# STATIC_DIR = os.path.join(BASE_DIR, "static")
+# STATICFILES_DIRS = [STATIC_DIR]
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
+TINYMCE_DEFAULT_CONFIG = {
+    "relative_urls": False,
+    "remove_script_host": False,
+    "convert_urls": True,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'theme': 'silver',
+    'plugins': '''
+            imagetools advlist autoresize
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap hr
+            anchor
+            ''',
+    'toolbar1': '''
+            bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+'image_advtab': True,
+    'imagetools_toolbar': 'rotateleft rotateright | flipv fliph | editimage imageoptions',
+    'autoresize_bottom_margin': 50,
+
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+    "language": "ru_RU",
+'file_browser_callback': 'djangoFileBrowser',
+}
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+TINYMCE_SPELLCHECKER = True
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tinymce")
+
+
+DIRECTORY = ''
+# Настройки FileBrowser
+FILEBROWSER_DIRECTORY = 'uploads/'
+FILEBROWSER_EXTENSIONS = {
+    'Image': ['.jpg','.jpeg','.gif','.png','.tif','.tiff'],
+    'Document': ['.pdf','.doc','.rtf','.txt','.xls','.csv'],
+    'Video': ['.mov','.mp4','.m4v','.avi','.mpg'],
+    'Audio': ['.mp3','.m4a','.wav','.aiff','.midi']
+}

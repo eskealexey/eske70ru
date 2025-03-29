@@ -199,7 +199,7 @@ TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tinymce")
 
 DIRECTORY = ''
 # Настройки FileBrowser
-FILEBROWSER_DIRECTORY = 'uploads/'
+FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_EXTENSIONS = {
     'Image': ['.jpg','.jpeg','.gif','.png','.tif','.tiff'],
     'Document': ['.pdf','.doc','.rtf','.txt','.xls','.csv'],

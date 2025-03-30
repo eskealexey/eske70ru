@@ -1,8 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import User
-from tinymce.models import HTMLField
-
 from accounts.models import CustomUser
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.urls import reverse
+from tinymce.models import HTMLField
 
 
 class Project(models.Model):
@@ -41,3 +41,61 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def active_comments(self):
+        return self.comments.filter(is_active=True)
+
+
+from django.db import models
+from django.utils import timezone
+
+
+User = get_user_model()
+
+class Comment(models.Model):
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Проект'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Автор'
+    )
+    text = models.TextField('Текст комментария', max_length=1000)
+    created_at = models.DateTimeField('Дата создания', default=timezone.now)
+    updated_at = models.DateTimeField('Дата обновления', auto_now=True)
+    is_active = models.BooleanField('Активен', default=True)
+    parent = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='replies',
+        verbose_name='Родительский комментарий'
+    )
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ['-created_at']  # Сортировка по дате создания
+
+    def __str__(self):
+        return f'Комментарий от {self.author} к проекту {self.project}'
+
+    def get_absolute_url(self):
+        return reverse('project_detail', kwargs={'slug': self.project.slug}) + f'#comment-{self.id}'
+
+    @property
+    def is_reply(self):
+        """Проверяет, является ли комментарий ответом"""
+        return self.parent is not None
+
+    @property
+    def get_replies(self):
+        """Возвращает все ответы на этот комментарий"""
+        return self.replies.filter(is_active=True).order_by('created_at')

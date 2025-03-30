@@ -1,0 +1,38 @@
+<div class="comment mb-3" id="comment-{{ comment.id }}">
+    <div class="comment-header d-flex justify-content-between">
+        <strong>{{ comment.author.username }}</strong>
+        <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+    </div>
+    <div class="comment-body">
+        <p>{{ comment.text }}</p>
+
+        <!-- Кнопка ответа -->
+        <button class="btn btn-sm btn-outline-secondary reply-btn"
+                data-comment-id="{{ comment.id }}">
+            Ответить
+        </button>
+
+        <!-- Форма ответа (изначально скрыта) -->
+        <div class="reply-form mt-2" style="display: none;">
+            <form method="post" action="{% url 'add_comment' comment.project.id %}">
+                {% csrf_token %}
+                <textarea name="text" rows="2" class="form-control mb-2"
+                          placeholder="Ваш ответ..."></textarea>
+                <input type="hidden" name="parent" value="{{ comment.id }}">
+                <button type="submit" class="btn btn-sm btn-primary">Отправить</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply">
+                    Отмена
+                </button>
+            </form>
+        </div>
+
+        <!-- Рекурсивный вывод ответов -->
+        {% if comment.get_replies %}
+            <div class="replies ml-4 mt-2">
+                {% for reply in comment.get_replies %}
+                    {% include 'projects/comment_item.html' with comment=reply %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

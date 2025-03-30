@@ -7,6 +7,7 @@
     <title>{{title}}</title>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+    <script src="{% static 'js/comments.js' %}"></script>
     <link rel="icon" href="data:;base64,=">
      <script>
         // Функция для обновления времени
@@ -96,8 +97,12 @@
 
                  {% if user.is_authenticated %}
                 <div class="col-md-3 col-6 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
-                    <a href="{% url 'login' %}">
-                    {{ user.username}}
+                    <a href="#">
+                        {% if not user.first_name %}
+                            {{ user.username }}
+                        {% else %}
+                            {{ user.first_name }}
+                        {% endif %}
                     </a>
                     <b> &nbsp; | &nbsp; </b>
                     <a href="{% url 'logout' %}">

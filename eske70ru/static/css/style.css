@@ -90,3 +90,23 @@ p {
     width: 100%;
     height: auto;
 }
+.comment {
+    border-left: 3px solid #eee;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+
+.comment .replies {
+    border-left: 2px solid #f0f0f0;
+    padding-left: 20px;
+}
+
+.comment-header {
+    margin-bottom: 5px;
+}
+
+.reply-form {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}

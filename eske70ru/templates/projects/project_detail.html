@@ -36,28 +36,31 @@
         </div>
     </div>
     <hr>
-    <div class="about-project">
+    <div class="card">
         <div class="card-body">
         {{ project.description|safe }}
         </div>
     </div>
     <hr>
 
-    <div class="comments-section">
+    <div class="comment">
     <h3>Комментарии</h3>
+        {% if not user.is_authenticated %}
+        Чтобы оставить комментарий, <a href="{% url 'login' %}"> авторизуйтесь </a>.
+        {% endif %}
 
     {% if user.is_authenticated %}
     <div class="comment-form">
         <form method="post" action="{% url 'add_comment' project.id %}">
             {% csrf_token %}
             {{ comment_form.text }}
-            {{ comment_form.parent_id }}
-            <button type="submit" class="btn btn-primary">Отправить</button>
+            {{ comment_form.parent_id }}<br>
+            <button type="submit" class="btn btn-sm btn-secondary">Отправить</button>
         </form>
     </div>
     {% endif %}
 
-    <div class="comments-list mt-4">
+    <div class="comment-header mt-4">
         {% for comment in project.comments.all %}
             {% if not comment.parent %}
                 {% include 'projects/comment_item.html' with comment=comment %}
@@ -67,5 +70,14 @@
         {% endfor %}
     </div>
 </div>
+
+
+
+
+
+
+
 </div>
+
+
 {% endblock %}

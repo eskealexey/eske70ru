@@ -92,13 +92,17 @@ p {
 }
 .comment {
     border-left: 3px solid #eee;
+    border-radius: 15px;
+    background-color: white;
     padding-left: 15px;
     margin-bottom: 15px;
+    font-size: 12px;
 }
 
 .comment .replies {
-    border-left: 2px solid #f0f0f0;
+    border-left: 2px solid green;
     padding-left: 20px;
+    background-color: #ccc;
 }
 
 .comment-header {
@@ -106,7 +110,8 @@ p {
 }
 
 .reply-form {
-    background: #f9f9f9;
+   /* background: #f9f9f9; */
+   background: linear-gradient(to right, #cccccc, #aaaaaa, #333333); /* Фиолетовый градиент */
     padding: 10px;
     border-radius: 5px;
 }

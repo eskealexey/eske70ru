@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
-
+from django.db import models
+from django.utils import timezone
 
 class Project(models.Model):
     CATEGORY_CHOICES = [
@@ -45,10 +46,6 @@ class Project(models.Model):
     @property
     def active_comments(self):
         return self.comments.filter(is_active=True)
-
-
-from django.db import models
-from django.utils import timezone
 
 
 User = get_user_model()

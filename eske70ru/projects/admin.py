@@ -14,6 +14,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id','project', 'author', 'parent', 'text','is_active', 'created_at')
     list_display_links = ('id', 'project','author', 'parent', 'text')
+    list_editable = ('is_active',)
 
 
 

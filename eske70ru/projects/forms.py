@@ -16,6 +16,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(attrs={
                 'rows': 3,
+                'class': 'form-control',
                 'placeholder': 'Напишите ваш комментарий...'
             }),
             'parent': forms.HiddenInput()  # Скрытое поле для parent_id

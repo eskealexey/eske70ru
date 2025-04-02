@@ -29,7 +29,7 @@
                 <p class="card-text">{{ project.short_description }}</p>
                 <div class="row">
                   <div class="col-md-8">
-
+                      <span class="text-success fw-lighter fst-italic">Просмотров: <u><b>{{ project.views }}</b></u></span>
                   </div>
                   <div class="col-md-4 text-center">
                     <a href="{% url 'project_detail' project.slug %}"><button class="btn btn-secondary btn-sm" type="button">Перейти</button></a>

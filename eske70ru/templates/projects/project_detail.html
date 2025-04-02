@@ -20,17 +20,45 @@
         <div class="col-sm-8 g-3">
             <div class="card">
               <div class="card-body">
-                Категория: <span class="badge bg-secondary">{{ project.get_category_display }}</span><br>
-                Дата публикации: <span class="badge bg-secondary">{{ project.created_at }}</span>
+                  <div class="row">
+                      <div class="col-sm-4">
+                        Категория:
+                      </div>
+                      <div class="col-sm-8">
+                          <span class="badge bg-secondary">{{ project.get_category_display }}</span><br>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-4">
+                          Дата публикации:
+                      </div>
+                      <div class="col-sm-8">
+                          <span class="badge bg-secondary">{{ project.created_at }}</span>
+                      </div>
+                  </div>
                   <hr>
-                  Автор:<span class="badge bg-secondary">
-                  {% if not project.author.first_name and not project.author.last_name %}
-                    {{ project.author }}
-                  {% else %}
-                    {{ project.author.first_name }} {{ project.author.last_name }}
-                  {% endif %}
-              </span><br>
-                  Кол-во просмотров: <span class="badge bg-secondary">{{ project.views }}</span>
+                  <div class="row">
+                      <div class="col-sm-4">
+                        Автор:
+                      </div>
+                      <div class="col-sm-8">
+                          <span class="badge bg-secondary">
+                              {% if not project.author.first_name and not project.author.last_name %}
+                                {{ project.author }}
+                              {% else %}
+                                {{ project.author.first_name }} {{ project.author.last_name }}
+                              {% endif %}
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      Кол-во просмотров:
+                    </div>
+                      <div class="col-sm-8">
+                        <span class="badge bg-secondary">{{ project.views }}</span>
+                      </div>
+                  </div>
               </div>
             </div>
         </div>
@@ -43,7 +71,7 @@
     </div>
     <hr>
 
-    <div class="comment">
+    <div class="comment bg-warning-subtle">
         <h3>Комментарии</h3>
             {% if not user.is_authenticated %}
             Чтобы оставить комментарий, <a href="{% url 'login' %}"> авторизуйтесь </a>.
@@ -61,7 +89,7 @@
         {% endif %}
 
 <!-- Комментарии -->
-<div class="comment-header mt-4">
+        <div class="comment-header mt-4">
             {% for comment in page_obj %}
                 {% if not comment.parent %}
                     {% include 'projects/comment_item.html' with comment=comment %}
@@ -71,26 +99,34 @@
             {% endfor %}
         </div>
 
-<!-- Пагинация -->
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; первая</a>
-            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
-        {% endif %}
+        <!-- Пагинация -->
+        <nav aria-label="...">
+          <ul class="pagination pagination-sm justify-content-center g-3">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; первая</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+              </li>
+            {% endif %}
 
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-        </span>
+            <li class="page-item">
+              <span class="page-link">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+              </span>
+            </li>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
-
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">следующая</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
 
     </div>
 </div>

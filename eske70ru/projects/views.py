@@ -20,36 +20,6 @@ def view_projects(request):
     }
     return render(request, 'projects/projects_all.html', context=context)
 
-#
-# class ProjectDetailView(DetailView):
-#     """
-#     Подробная информация о проекте
-#     """
-#     model = Project
-#     template_name = 'projects/project_detail.html'
-#     context_object_name = 'project'
-#
-#     def get_object(self, queryset=None):
-#         # Получаем объект проекта
-#         project = super().get_object(queryset)
-#
-#         # Логика подсчета просмотров
-#         session_key = f'project_viewed_{project.id}'
-#         if not self.request.session.get(session_key, False):
-#             # Атомарное обновление счетчика просмотров
-#             Project.objects.filter(pk=project.pk).update(views=F('views') + 1)
-#             # Обновляем объект проекта
-#             project.refresh_from_db()
-#             self.request.session[session_key] = True
-#
-#         return project
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['comment_form'] = CommentForm()
-#         return context
-#
-
 
 class ProjectDetailView(DetailView):
     """
@@ -58,7 +28,7 @@ class ProjectDetailView(DetailView):
     model = Project
     template_name = 'projects/project_detail.html'
     context_object_name = 'project'
-    comments_per_page = 20  # Количество комментариев на странице
+    comments_per_page = 15  # Количество комментариев на странице
 
     def get_object(self, queryset=None):
         project = super().get_object(queryset)

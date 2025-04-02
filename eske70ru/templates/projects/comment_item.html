@@ -1,17 +1,18 @@
-<div class="comment mb-3" id="comment-{{ comment.id }}">
+<div class="comment mb-3 border" id="comment-{{ comment.id }}">
     <div class="comment-header d-flex justify-content-between">
         <strong>{{ comment.author.username }}</strong>
-        <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+        <small class="text-muted p-2">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
     </div>
     <div class="comment-body">
         <p>{{ comment.text }}</p>
 
         <!-- Кнопка ответа -->
-        <button class="btn btn-sm btn-outline-secondary reply-btn"
+        {% if user.is_authenticated %}
+        <button class="btn btn-sm btn-outline-secondary reply-btn mb-2"
                 data-comment-id="{{ comment.id }}">
             Ответить
         </button>
-
+        {% endif %}
         <!-- Форма ответа (изначально скрыта) -->
         <div class="reply-form mt-2" style="display: none;">
             <form method="post" action="{% url 'add_comment' comment.project.id %}">
@@ -23,6 +24,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply">
                     Отмена
                 </button>
+
             </form>
         </div>
 

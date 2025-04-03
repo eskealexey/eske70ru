@@ -91,11 +91,9 @@ def profile(request):
     Профиль пользователя
     """
     if request.user.is_authenticated:
-        # user = CustomUser.objects.get(pk=pk)
         context = {
             'title': f'Профиль {request.user}',
             'user': request.user}
         return render(request, 'accounts/profile.html', context)
     else:
         return redirect('home')
-    return render(request,'accounts/profile.html')

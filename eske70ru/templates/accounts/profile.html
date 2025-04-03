@@ -1,16 +1,64 @@
 {% extends 'index_template.html' %}
 
 {% block content %}
-
-
 <div class="container">
-Профиль {{user.first_name}}
-{{user.sex}}
-
-
-
-
-
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Профиль {{user.username}}</th>
+                    <th scope="col">Дата регистрации: {{user.date_joined}}</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Имя:</td>
+                    <td>{{user.first_name}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Фамилия:</td>
+                    <td>{{user.last_name}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Пол:</td>
+                    <td>{{user.gender}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Дата рождения:</td>
+                    <td>{{user.birthday}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td>{{user.email}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Страна:</td>
+                    <td>{{user.country}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Населенный пункт:</td>
+                    <td>{{user.city}}</td>
+                    <td><a href="#">Изменить</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
 
 {% endblock %}

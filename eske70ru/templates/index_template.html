@@ -97,7 +97,7 @@
 
                  {% if user.is_authenticated %}
                 <div class="col-md-3 col-6 border bg-body-tertiary custom-rounded d-flex justify-content-center align-items-center">
-                    <a href="#">
+                    <a href="{% url 'profile' %}">
                         {% if not user.first_name %}
                             {{ user.username }}
                         {% else %}

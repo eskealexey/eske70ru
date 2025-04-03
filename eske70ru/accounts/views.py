@@ -80,7 +80,22 @@ def login_view(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
-
 def logout_view(request):
+    """Выход из аккаунта"""
     logout(request)
     return redirect('home')  # Перенаправление на главную страницу
+
+
+def profile(request):
+    """
+    Профиль пользователя
+    """
+    if request.user.is_authenticated:
+        # user = CustomUser.objects.get(pk=pk)
+        context = {
+            'title': f'Профиль {request.user}',
+            'user': request.user}
+        return render(request, 'accounts/profile.html', context)
+    else:
+        return redirect('home')
+    return render(request,'accounts/profile.html')

@@ -15,7 +15,57 @@
                 <tr>
                     <td>Имя:</td>
                     <td>{{user.first_name}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+                        <!-- Кнопка-триггер модального окна -->
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                      Изменить
+                    </button>
+
+                    <!-- Модальное окно -->
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel2">Добавить / Отнять</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form method="post" action="#">
+                                  {% csrf_token %}
+                                  <input type="hidden" name="idt" value="{{ transistor.id }}">
+                                  <p><input type="number" id="quantity" name="quantity" class="form-control" min="0" placeholder="кол-во" required></p>
+                                  <div class="row align-baseline">
+                                      <div class="col-4">
+                                          <input type="radio" name="activ" id="add" value="+" required>
+                                          <label for="add">Добавить (+)</label>
+                                      </div>
+                                      <div class="col-6">
+                                          <input type="radio" name="activ" id="del" value="-" required>
+                                          <label for="del">Отнять (-)</label>
+                                      </div>
+                                  </div>
+                                  <p></p>
+                                  <div class="g-5">
+                                      <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Выполнить операцию</button>
+                                  </div>
+                              </form>
+
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    </div>
+
+                </div>
+
+
+
+<!--                        <a href="#">Изменить</a></td>-->
                 </tr>
                 <tr>
                     <td>Фамилия:</td>

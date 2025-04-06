@@ -1,14 +1,18 @@
+import logging
+
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm
 from .models import CustomUser
 
 
@@ -40,6 +44,7 @@ def register(request):
     else:
         form = RegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
 
 def activate(request, uidb64, token):
     """Активация аккаунта"""
@@ -86,6 +91,7 @@ def logout_view(request):
     return redirect('home')  # Перенаправление на главную страницу
 
 
+@login_required
 def profile(request):
     """
     Профиль пользователя
@@ -97,3 +103,39 @@ def profile(request):
         return render(request, 'accounts/profile.html', context)
     else:
         return redirect('home')
+
+
+logger = logging.getLogger(__name__)
+
+
+@login_required
+def change_profile(request, param):
+    """
+    Изменение профиля пользователя
+    """
+    if request.method == 'POST':
+        user = request.user
+
+        # Сопоставление параметров с атрибутами пользователя
+        fields = {
+            'first_name': 'first_name',
+            'last_name': 'last_name',
+            'gender': 'gender',
+            'birthday': 'birthday',
+            'email': 'email',
+            'country': 'country',
+            'city': 'city'
+        }
+
+        # Проверяем, есть ли переданный параметр в словаре
+        if param in fields:
+            value = request.POST.get(param)
+            if value:
+                try:
+                    setattr(user, fields[param], value)
+                    user.save()
+                except Exception as e:
+                    logger.error(f"Error updating {param}: {e}")
+        return redirect('profile')
+
+    return redirect('profile')

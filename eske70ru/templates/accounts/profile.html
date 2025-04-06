@@ -16,86 +16,267 @@
                     <td>Имя:</td>
                     <td>{{user.first_name}}</td>
                     <td>
-                        <!-- Кнопка-триггер модального окна -->
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                      Изменить
-                    </button>
+                            <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#first_nameModal">
+                          Изменить
+                        </button>
 
-                    <!-- Модальное окно -->
-                    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel2">Добавить / Отнять</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                          </div>
-                          <div class="modal-body">
-                              <form method="post" action="#">
-                                  {% csrf_token %}
-                                  <input type="hidden" name="idt" value="{{ transistor.id }}">
-                                  <p><input type="number" id="quantity" name="quantity" class="form-control" min="0" placeholder="кол-во" required></p>
-                                  <div class="row align-baseline">
-                                      <div class="col-4">
-                                          <input type="radio" name="activ" id="add" value="+" required>
-                                          <label for="add">Добавить (+)</label>
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="first_nameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel2">Изменить имя</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'first_name' %}">
+                                      {% csrf_token %}
+                                      <p><input type="text" value="{{user.first_name}}" id="first_name" name="first_name" class="form-control" placeholder="Имя" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
                                       </div>
-                                      <div class="col-6">
-                                          <input type="radio" name="activ" id="del" value="-" required>
-                                          <label for="del">Отнять (-)</label>
-                                      </div>
-                                  </div>
-                                  <p></p>
-                                  <div class="g-5">
-                                      <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Выполнить операцию</button>
-                                  </div>
-                              </form>
+                                  </form>
 
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
 
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-
-                    </div>
-
-                </div>
-
-
-
-<!--                        <a href="#">Изменить</a></td>-->
+                    </td>
                 </tr>
                 <tr>
                     <td>Фамилия:</td>
                     <td>{{user.last_name}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#last_nameModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="last_nameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="last_nameModalLabel2">Изменить фамилию:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'last_name' %}">
+                                      {% csrf_token %}
+                                      <p><input type="text" value="{{user.last_name}}" id="last_name" name="last_name" class="form-control" placeholder="Фамилия" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                                      </div>
+                                  </form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                 </tr>
                 <tr>
                     <td>Пол:</td>
-                    <td>{{user.gender}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>{{user.get_gender_display}}</td>
+                    <td>
+
+                                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#genderModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="genderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="genderModalLabel2">Изменить пол</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                <form method="post" action="{% url 'change_profile' 'gender' %}">
+    {% csrf_token %}
+    <p>
+        <select id="gender" name="gender" class="form-control" required>
+            <option value="male" {% if user.gender == 'male' %}selected{% endif %}>мужской</option>
+            <option value="female" {% if user.gender == 'female' %}selected{% endif %}>женский</option>
+        </select>
+    </p>
+    <div class="g-5">
+        <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+    </div>
+</form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                 </tr>
                 <tr>
                     <td>Дата рождения:</td>
                     <td>{{user.birthday}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#birthdayModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="birthdayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="birthdayModalLabel2">Изменить дату рождения:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'birthday' %}">
+                                      {% csrf_token %}
+                                      <p><input type="date" value="{{user.birthday}}" id="birthday" name="birthday" class="form-control" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                                      </div>
+                                  </form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>E-mail:</td>
                     <td>{{user.email}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+
+                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#emailModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="emailModalLabel2">Изменить email:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'email' %}">
+                                      {% csrf_token %}
+                                      <p><input type="email" value="{{user.email}}" id="email" name="email" class="form-control" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                                      </div>
+                                  </form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                 </tr>
                 <tr>
                     <td>Страна:</td>
                     <td>{{user.country}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+
+                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#countryModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="countryModalLabel2">Изменить страну:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'country' %}">
+                                      {% csrf_token %}
+                                      <p><input type="text" value="{{user.country}}" id="country" name="country" class="form-control" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                                      </div>
+                                  </form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                 </tr>
                 <tr>
                     <td>Населенный пункт:</td>
                     <td>{{user.city}}</td>
-                    <td><a href="#">Изменить</a></td>
+                    <td>
+
+                        <!-- Кнопка-триггер модального окна -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#cityModal">
+                          Изменить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="cityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="cityModalLabel2">Изменить населенный пункт:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form method="post" action="{% url 'change_profile' 'city' %}">
+                                      {% csrf_token %}
+                                      <p><input type="text" value="{{user.city}}" id="city" name="city" class="form-control" required></p>
+                                      <div class="g-5">
+                                          <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                                      </div>
+                                  </form>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                 </tr>
             </tbody>
         </table>

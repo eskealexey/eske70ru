@@ -61,6 +61,7 @@ class ProjectDetailView(DetailView):
         context['comment_form'] = CommentForm()
         context['page_obj'] = page_obj
         context['paginator'] = paginator
+        context['title'] = project.title
 
         return context
 

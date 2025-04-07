@@ -1,7 +1,15 @@
 {% extends 'index_template.html' %}
 
 {% block content %}
-saaaaasaavva
+
+{% if model3ds %}
+    {% for model in model3ds %}
+        <p>
+            <a href="{{ model.url }}">{{ model.title }}</a>
+        </p>
+    {% endfor %}
+
+{% endif %}
 
 
 {% endblock %}

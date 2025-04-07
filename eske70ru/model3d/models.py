@@ -112,10 +112,10 @@ class Model3D(models.Model):
         default='draft'
     )
     download_count = models.PositiveIntegerField('Количество скачиваний', default=0)
-    poly_count = models.PositiveIntegerField('Количество полигонов', default=0)
-    is_animated = models.BooleanField('Анимированная модель', default=False)
-    is_rigged = models.BooleanField('Ригged модель', default=False)
-    is_printable = models.BooleanField('Готова для 3D печати', default=False)
+    # poly_count = models.PositiveIntegerField('Количество полигонов', default=0)
+    # is_animated = models.BooleanField('Анимированная модель', default=False)
+    # is_rigged = models.BooleanField('Ригged модель', default=False)
+    # is_printable = models.BooleanField('Готова для 3D печати', default=False)
 
     class Meta:
         verbose_name = '3D модель'

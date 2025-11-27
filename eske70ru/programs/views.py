@@ -30,6 +30,19 @@ def view_programs(request):
         'count_downloads': dict_count,
     }
     return render(request, 'programs/view_programs.html', context=context)
+# def view_programs(request):
+#     """Вывод списка программ"""
+#     from django.db.models import Sum
+#
+#     programs = Program.objects.filter(is_active=True).annotate(
+#         total_downloads=Sum('softdownload__count')
+#     )
+#
+#     context = {
+#         'title': 'Программы',
+#         'programs': programs,
+#     }
+#     return render(request, 'programs/view_programs.html', context=context)
 
 
 def program_detail(request, program_id):

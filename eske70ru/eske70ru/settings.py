@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'accounts',
     'programs',
     'projects',
-    'model3d',
 ]
 
 SITE_ID = 1  # Укажите ID вашего сайта

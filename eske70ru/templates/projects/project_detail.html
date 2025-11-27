@@ -67,9 +67,67 @@
         <div class="card-body">
         {{ project.description|safe }}
         </div>
-    </div>
-    <hr>
 
+        <div class="card">
+        <!-- Блок с файлами проекта -->
+    {% if files_count > 0 %}
+    <div class="project-files-section">
+        <h5>Файлы проекта ({{ files_count }})</h5>
+
+        {% for file_type, data in files_by_type.items %}
+        <div class="file-type-group">
+            <h4>{{ file_type }} ({{ data.count }})</h4>
+            <div class="files-list">
+                {% for file in data.files %}
+                <div class="file-item">
+                    <div class="file-icon">
+                        <!-- Иконка в зависимости от типа файла -->
+                        <i class="fas fa-file-{{ file.file_type }}"></i>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">{{ file.name }}</div>
+                        <div class="file-meta">
+                            <span class="file-size">{{ file.get_file_size_display }}</span>
+                            <span class="file-downloads">Скачано: {{ file.download_count }}</span>
+                        </div>
+                        {% if file.description %}
+                        <div class="file-description">{{ file.description }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="file-actions">
+                        <a href="{% url 'project_file_download' file.id %}">{{ file.name }}</a>
+                        <a href="{% url 'project_file_download' file.id %}"
+                           class="btn btn-download"
+                           title="Скачать файл">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="files-total-size">
+            Общий размер всех файлов:
+            <strong>{{ project.total_files_size }}</strong>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-files">
+        <p>К этому проекту еще не добавлены файлы.</p>
+    </div>
+    {% endif %}
+    </div>
+
+    </div>
+
+
+
+
+
+
+    <hr>
     <div class="comment bg-warning-subtle">
         <h3>Комментарии</h3>
             {% if not user.is_authenticated %}
@@ -129,6 +187,56 @@
 
     </div>
 </div>
+
+
+<!--&lt;!&ndash; Блок с файлами проекта &ndash;&gt;-->
+<!--    {% if files_count > 0 %}-->
+<!--    <div class="project-files-section">-->
+<!--        <h3>Файлы проекта ({{ files_count }})</h3>-->
+
+<!--        {% for file_type, data in files_by_type.items %}-->
+<!--        <div class="file-type-group">-->
+<!--            <h4>{{ file_type }} ({{ data.count }})</h4>-->
+<!--            <div class="files-list">-->
+<!--                {% for file in data.Files %}-->
+<!--                <div class="file-item">-->
+<!--                    <div class="file-icon">-->
+<!--                        &lt;!&ndash; Иконка в зависимости от типа файла &ndash;&gt;-->
+<!--                        <i class="fas fa-file-{{ file.file_type }}"></i>-->
+<!--                    </div>-->
+<!--                    <div class="file-info">-->
+<!--                        <div class="file-name">{{ file.name }}</div>-->
+<!--                        <div class="file-meta">-->
+<!--                            <span class="file-size">{{ file.get_file_size_display }}</span>-->
+<!--                            <span class="file-downloads">Скачано: {{ file.download_count }}</span>-->
+<!--                        </div>-->
+<!--                        {% if file.description %}-->
+<!--                        <div class="file-description">{{ file.description }}</div>-->
+<!--                        {% endif %}-->
+<!--                    </div>-->
+<!--                    <div class="file-actions">-->
+<!--                        <a href="{% url 'project_file_download' file.id %}"-->
+<!--                           class="btn btn-download"-->
+<!--                           title="Скачать файл">-->
+<!--                            <i class="fas fa-download"></i>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+
+<!--        <div class="files-total-size">-->
+<!--            Общий размер всех файлов:-->
+<!--            <strong>{{ project.get_total_files_size_display }}</strong>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% else %}-->
+<!--    <div class="no-files">-->
+<!--        <p>К этому проекту еще не добавлены файлы.</p>-->
+<!--    </div>-->
+<!--    {% endif %}-->
 
 
 

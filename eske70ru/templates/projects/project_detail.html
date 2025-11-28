@@ -1,245 +1,233 @@
 {% extends 'index_template.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ project.title }}</h1>
-    <div class="row">
-        <div class="col-sm-4">
-            {% if project.image %}
-                <img src="{{ project.image.url }}" class="img-fluid" alt="{{project.title}}"/>
-            {% else %}
-                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100%" height="100%" fill="#e0e0e0" />
-                    <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" font-size="24" fill="#888">
-                        Нет фото
-                    </text>
-                </svg>
-            {% endif %}
-        </div>
-        <div class="col-sm-8">
-            <div class="card">
-              <div class="card-body">
-                  <div class="row">
-                      <div class="col-sm-4">
-                        Категория:
-                      </div>
-                      <div class="col-sm-8">
-                          <span class="badge bg-secondary">{{ project.get_category_display }}</span><br>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-4">
-                          Дата публикации:
-                      </div>
-                      <div class="col-sm-8">
-                          <span class="badge bg-secondary">{{ project.created_at }}</span>
-                      </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                      <div class="col-sm-4">
-                        Автор:
-                      </div>
-                      <div class="col-sm-8">
-                          <span class="badge bg-secondary">
-                              {% if not project.author.first_name and not project.author.last_name %}
-                                {{ project.author }}
-                              {% else %}
-                                {{ project.author.first_name }} {{ project.author.last_name }}
-                              {% endif %}
-                          </span>
-                      </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      Кол-во просмотров:
-                    </div>
-                      <div class="col-sm-8">
-                        <span class="badge bg-secondary">{{ project.views }}</span>
-                      </div>
-                  </div>
-              </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-sm-1">
+        <a class="btn btn-sm mt-3 btn-outline-info" href="{% url 'view_projects' %}"> К списку проектов</a>
     </div>
-    <hr>
-    <div class="card">
-        <div class="card-body">
-        {{ project.description|safe }}
-        </div>
-
-        <div class="card">
-        <!-- Блок с файлами проекта -->
-    {% if files_count > 0 %}
-    <div class="project-files-section">
-        <h5>Файлы проекта ({{ files_count }})</h5>
-
-        {% for file_type, data in files_by_type.items %}
-        <div class="file-type-group">
-            <h4>{{ file_type }} ({{ data.count }})</h4>
-            <div class="files-list">
-                {% for file in data.files %}
-                <div class="file-item">
-                    <div class="file-icon">
-                        <!-- Иконка в зависимости от типа файла -->
-                        <i class="fas fa-file-{{ file.file_type }}"></i>
-                    </div>
-                    <div class="file-info">
-                        <div class="file-name">{{ file.name }}</div>
-                        <div class="file-meta">
-                            <span class="file-size">{{ file.get_file_size_display }}</span>
-                            <span class="file-downloads">Скачано: {{ file.download_count }}</span>
-                        </div>
-                        {% if file.description %}
-                        <div class="file-description">{{ file.description }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="file-actions">
-                        <a href="{% url 'project_file_download' file.id %}">{{ file.name }}</a>
-                        <a href="{% url 'project_file_download' file.id %}"
-                           class="btn btn-download"
-                           title="Скачать файл">
-                            <i class="fas fa-download"></i>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
-
-        <div class="files-total-size">
-            Общий размер всех файлов:
-            <strong>{{ project.total_files_size }}</strong>
-        </div>
-    </div>
-    {% else %}
-    <div class="no-files">
-        <p>К этому проекту еще не добавлены файлы.</p>
-    </div>
-    {% endif %}
-    </div>
-
-    </div>
-
-
-
-
-
-
-    <hr>
-    <div class="comment bg-warning-subtle">
-        <h3>Комментарии</h3>
-            {% if not user.is_authenticated %}
-            Чтобы оставить комментарий, <a href="{% url 'login' %}"> авторизуйтесь </a>.
-            {% endif %}
-
-        {% if user.is_authenticated %}
-        <div class="comment-form">
-            <form method="post" action="{% url 'add_comment' project.id %}">
-                {% csrf_token %}
-                {{ comment_form.text }}
-                {{ comment_form.parent_id }}<br>
-                <button type="submit" class="btn btn-sm btn-secondary">Отправить</button>
-            </form>
-        </div>
-        {% endif %}
-
-<!-- Комментарии -->
-        <div class="comment-header mt-4">
-            {% for comment in page_obj %}
-                {% if not comment.parent %}
-                    {% include 'projects/comment_item.html' with comment=comment %}
-                {% endif %}
-            {% empty %}
-                <p>Пока нет комментариев. Будьте первым!</p>
-            {% endfor %}
-        </div>
-
-        <!-- Пагинация -->
-        <nav aria-label="...">
-          <ul class="pagination pagination-sm justify-content-center">
-            {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page=1">&laquo; первая</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
-              </li>
-            {% endif %}
-
-            <li class="page-item">
-              <span class="page-link">
-                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-              </span>
-            </li>
-
-            {% if page_obj.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">следующая</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
-              </li>
-            {% endif %}
-          </ul>
-        </nav>
-
+    <div class="col-sm-11">
+        <h1 class="text-center mb-3 text-decoration-underline ">{{ project.title }}</h1>
     </div>
 </div>
 
+<div class="container mt-4">
+    <div class="row mb-4">
+        <!-- Изображение проекта -->
+        <div class="col-sm-4 mb-3">
+            {% if project.image %}
+                <img src="{{ project.image.url }}" class="img-fluid rounded" alt="{{ project.title }}" style="max-height: 300px; object-fit: cover;">
+            {% else %}
+                <div class="bg-light text-center rounded d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <div>
+                        <i class="fas fa-image text-muted" style="font-size: 48px;"></i>
+                        <p class="text-muted mt-2">Нет фото</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
 
-<!--&lt;!&ndash; Блок с файлами проекта &ndash;&gt;-->
-<!--    {% if files_count > 0 %}-->
-<!--    <div class="project-files-section">-->
-<!--        <h3>Файлы проекта ({{ files_count }})</h3>-->
+        <!-- Информация о проекте -->
+        <div class="col-sm-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted fw-bold">Категория:</div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-primary">{{ project.get_category_display }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted fw-bold">Дата:</div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-secondary">{{ project.created_at|date:"d.m.Y H:i" }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted fw-bold">Автор:</div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-info text-dark">
+                                {% if project.author.first_name or project.author.last_name %}
+                                    {{ project.author.first_name }} {{ project.author.last_name }}
+                                {% else %}
+                                    {{ project.author }}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted fw-bold">Просмотров:</div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-warning text-dark">{{ project.views }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--        {% for file_type, data in files_by_type.items %}-->
-<!--        <div class="file-type-group">-->
-<!--            <h4>{{ file_type }} ({{ data.count }})</h4>-->
-<!--            <div class="files-list">-->
-<!--                {% for file in data.Files %}-->
-<!--                <div class="file-item">-->
-<!--                    <div class="file-icon">-->
-<!--                        &lt;!&ndash; Иконка в зависимости от типа файла &ndash;&gt;-->
-<!--                        <i class="fas fa-file-{{ file.file_type }}"></i>-->
-<!--                    </div>-->
-<!--                    <div class="file-info">-->
-<!--                        <div class="file-name">{{ file.name }}</div>-->
-<!--                        <div class="file-meta">-->
-<!--                            <span class="file-size">{{ file.get_file_size_display }}</span>-->
-<!--                            <span class="file-downloads">Скачано: {{ file.download_count }}</span>-->
-<!--                        </div>-->
-<!--                        {% if file.description %}-->
-<!--                        <div class="file-description">{{ file.description }}</div>-->
-<!--                        {% endif %}-->
-<!--                    </div>-->
-<!--                    <div class="file-actions">-->
-<!--                        <a href="{% url 'project_file_download' file.id %}"-->
-<!--                           class="btn btn-download"-->
-<!--                           title="Скачать файл">-->
-<!--                            <i class="fas fa-download"></i>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        {% endfor %}-->
+    <!-- Описание проекта -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">Описание</h4>
+            <div class="text-muted">
+                {{ project.description|safe }}
+            </div>
+        </div>
+    </div>
 
-<!--        <div class="files-total-size">-->
-<!--            Общий размер всех файлов:-->
-<!--            <strong>{{ project.get_total_files_size_display }}</strong>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    {% else %}-->
-<!--    <div class="no-files">-->
-<!--        <p>К этому проекту еще не добавлены файлы.</p>-->
-<!--    </div>-->
-<!--    {% endif %}-->
+    <!-- Файлы проекта -->
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <h4 class="card-title">
+            <i class="fas fa-file-alt me-2"><u> Файлы проекта</u></i>
+
+            {% if files_count > 0 %}
+                <span class="badge bg-secondary">{{ files_count }}</span>
+            {% endif %}
+        </h4>
+
+        {% if files_count > 0 %}
+            {% for file_type, data in files_by_type.items %}
+            <div class="file-type-group mt-3">
+                <h5 class="text-primary border-bottom pb-1">
+                    <i class="fas fa-folder-open me-1" style="font-size: 10px;"> {{ file_type }}</i>
+
+                    <span class="badge bg-secondary">{{ data.count }}</span>
+                </h5>
+                <div class="list-group list-group-flush mt-2">
+                    {% for file in data.files %}
+                    <div class="list-group-item d-flex align-items-center justify-content-between p-3" style="font-size: 12px;">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file me-3 text-muted" style="font-size: 16px;"></i>
+                            <div>
+                                <div class="fw-bold">
+                                    {{ file.name }}
+                                    <a href="{% url 'project_file_download' file.id %}" class="btn btn-sm btn-outline-primary mt-1">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                                {% if file.description %}
+                                    <small class="text-muted" style="font-size: 12px; display: block;">{{ file.description }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-end ms-3">
+                            <div><small class="text-muted" style="font-size: 12px;">{{ file.get_file_size_display }}</small></div>
+                            <div><small class="text-muted" style="font-size: 12px;">Скачано: {{ file.download_count }}</small></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="mt-3 p-3 bg-light rounded text-center">
+                <small class="text-muted" style="font-size: 12px;">
+                    Общий размер всех файлов:
+                    <strong>{{ total_files_size }}</strong>
+                </small>
+            </div>
+        {% else %}
+            <div class="alert alert-light text-center mt-3" role="alert" style="font-size: 12px;">
+                <i class="fas fa-inbox me-2"></i>
+                К этому проекту ещё не добавлены файлы.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+    <!-- Комментарии -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4><i class="fas fa-comments me-2"></i>Комментарии</h4>
+
+            {% if not user.is_authenticated %}
+                <div class="alert alert-warning mt-3">
+                    Чтобы оставить комментарий, <a href="{% url 'login' %}" class="alert-link">авторизуйтесь</a>.
+                </div>
+            {% else %}
+                <div class="comment-form mt-3">
+                    <form method="post" action="{% url 'add_comment' project.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ comment_form.text }}
+                            {{ comment_form.parent_id }}
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="fas fa-paper-plane me-1"></i>Отправить
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <!-- Список комментариев -->
+            <div class="comments-list mt-4">
+                {% for comment in page_obj %}
+                    {% if not comment.parent %}
+                        {% include 'projects/comment_item.html' with comment=comment %}
+                    {% endif %}
+                {% empty %}
+                    <p class="text-muted">Пока нет комментариев. Будьте первым!</p>
+                {% endfor %}
+            </div>
 
 
+            <!-- Пагинация -->
+            {% if page_obj.has_other_pages %}
+            <nav aria-label="Пагинация комментариев" class="mt-4">
+    <ul class="pagination pagination-sm justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Первая">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Предыдущая">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&laquo;</span>
+            </li>
+        {% endif %}
 
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Следующая">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Последняя">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

@@ -9,6 +9,11 @@ from tinymce.models import HTMLField
 from django.db import models
 from django.utils import timezone
 
+
+def project_files_path(instance, filename):
+    """Генерирует путь для файлов проекта"""
+    return f'projects/{instance.project.slug}/files/{filename}'
+
 class Project(models.Model):
     CATEGORY_CHOICES = [
         ('power', 'Силовые установки'),
@@ -36,6 +41,7 @@ class Project(models.Model):
     views = models.PositiveIntegerField('Просмотры', default=0)
     rating = models.FloatField('Рейтинг', default=0)
     image = models.ImageField('Изображение', upload_to='project_images/', blank=True, null=True)
+    # image = models.ImageField('Изображение', upload_to=project_files_path, blank=True, null=True)
     # difficulty = models.PositiveSmallIntegerField('Сложность (1-5)', default=3)
 
     class Meta:
@@ -129,9 +135,9 @@ class Comment(models.Model):
         return self.replies.filter(is_active=True).order_by('created_at')
 
 
-def project_files_path(instance, filename):
-    """Генерирует путь для файлов проекта"""
-    return f'projects/{instance.project.slug}/files/{filename}'
+# def project_files_path(instance, filename):
+#     """Генерирует путь для файлов проекта"""
+#     return f'projects/{instance.project.slug}/files/{filename}'
 
 
 class ProjectFile(models.Model):

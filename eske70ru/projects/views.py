@@ -170,6 +170,7 @@ class ProjectDetailView(DetailView):
         for file_obj in project_files:
             file_type = file_obj.file_type
             file_type_display = file_obj.get_file_type_display()
+            print(file_type_display)
 
             if file_type not in files_by_type:
                 files_by_type[file_type] = {
@@ -189,6 +190,8 @@ class ProjectDetailView(DetailView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
+
+
         # Добавляем в контекст
         context.update({
             'comment_form': CommentForm(),
@@ -198,11 +201,22 @@ class ProjectDetailView(DetailView):
             'project_files': project_files,
             'files_by_type': files_by_type,
             'files_count': project.files_count,
-            'total_files_size': project.total_files_size,
+            'total_files_size': get_file_size_display(project.total_files_size),
             'file_types_present': file_types_present,
         })
 
         return context
+
+def get_file_size_display(size):
+    """Возвращает размер файла в удобном формате"""
+    if size < 1024:
+        return f"{size} Б"
+    elif size < 1024 * 1024:
+        return f"{size / 1024:.1f} КБ"
+    elif size < 1024 * 1024 * 1024:
+        return f"{size / (1024 * 1024):.1f} МБ"
+    else:
+        return f"{size / (1024 * 1024 * 1024):.1f} ГБ"
 
 
 class ProjectFileDownloadView(View):

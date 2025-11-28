@@ -1,7 +1,10 @@
-from django.db.models.signals import pre_delete, post_save, pre_save
-from django.dispatch import receiver
-from django.core.files.storage import default_storage
 import os
+
+from django.core.files.storage import default_storage
+from django.db.models.signals import post_delete
+from django.db.models.signals import pre_delete, pre_save
+from django.dispatch import receiver
+
 from .models import ProjectFile
 
 
@@ -35,9 +38,7 @@ def auto_set_file_info(sender, instance, **kwargs):
 
 
 # В signals.py
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
-from .models import Project, ProjectFile
+
 
 
 @receiver(post_delete, sender=ProjectFile)

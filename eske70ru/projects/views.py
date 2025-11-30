@@ -24,110 +24,6 @@ def view_projects(request):
     return render(request, 'projects/projects_all.html', context=context)
 
 
-# class ProjectDetailView(DetailView):
-#     """
-#     Подробная информация о проекте с пагинацией комментариев
-#     """
-#     model = Project
-#     template_name = 'projects/project_detail.html'
-#     context_object_name = 'project'
-#     comments_per_page = 15  # Количество комментариев на странице
-#
-#     def get_object(self, queryset=None):
-#         project = super().get_object(queryset)
-#
-#         session_key = f'project_viewed_{project.id}'
-#         if not self.request.session.get(session_key, False):
-#             Project.objects.filter(pk=project.pk).update(views=F('views') + 1)
-#             project.refresh_from_db()
-#             self.request.session[session_key] = True
-#
-#         return project
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         project = self.object
-#
-#         # Получаем активные комментарии
-#         comments = project.active_comments.all()
-#
-#         # Создаем пагинатор
-#         paginator = Paginator(comments, self.comments_per_page)
-#
-#         # Получаем номер страницы из GET-параметра
-#         page_number = self.request.GET.get('page')
-#
-#         # Получаем страницу с комментариями
-#         page_obj = paginator.get_page(page_number)
-#
-#         # Добавляем в контекст
-#         context['comment_form'] = CommentForm()
-#         context['page_obj'] = page_obj
-#         context['paginator'] = paginator
-#         context['title'] = project.title
-#
-#         return context
-
-#
-# class ProjectDetailView(DetailView):
-#     """
-#     Подробная информация о проекте с пагинацией комментариев и файлами
-#     """
-#     model = Project
-#     template_name = 'projects/project_detail.html'
-#     context_object_name = 'project'
-#     comments_per_page = 15  # Количество комментариев на странице
-#
-#     def get_object(self, queryset=None):
-#         project = super().get_object(queryset)
-#
-#         session_key = f'project_viewed_{project.id}'
-#         if not self.request.session.get(session_key, False):
-#             Project.objects.filter(pk=project.pk).update(views=F('views') + 1)
-#             project.refresh_from_db()
-#             self.request.session[session_key] = True
-#
-#         return project
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         project = self.object
-#
-#         # Получаем активные комментарии
-#         comments = project.active_comments.all()
-#
-#         # Получаем файлы проекта
-#         project_files = project.active_files.all()
-#
-#         # Группируем файлы по типам для удобного отображения
-#         files_by_type = {}
-#         for file_type, file_type_display in ProjectFile.FILE_TYPES:
-#             files_of_type = project_files.filter(file_type=file_type)
-#             if files_of_type.exists():
-#                 files_by_type[file_type_display] = files_of_type
-#
-#         # Создаем пагинатор для комментариев
-#         paginator = Paginator(comments, self.comments_per_page)
-#
-#         # Получаем номер страницы из GET-параметра
-#         page_number = self.request.GET.get('page')
-#
-#         # Получаем страницу с комментариями
-#         page_obj = paginator.get_page(page_number)
-#
-#         # Добавляем в контекст
-#         context['comment_form'] = CommentForm()
-#         context['page_obj'] = page_obj
-#         context['paginator'] = paginator
-#         context['title'] = project.title
-#         context['project_files'] = project_files
-#         context['files_by_type'] = files_by_type
-#         context['files_count'] = project.files_count
-#         context['total_files_size'] = project.total_files_size
-#
-#         return context
-
-
 class ProjectDetailView(DetailView):
     """
     Подробная информация о проекте с пагинацией комментариев и файлами
@@ -170,7 +66,6 @@ class ProjectDetailView(DetailView):
         for file_obj in project_files:
             file_type = file_obj.file_type
             file_type_display = file_obj.get_file_type_display()
-            print(file_type_display)
 
             if file_type not in files_by_type:
                 files_by_type[file_type] = {

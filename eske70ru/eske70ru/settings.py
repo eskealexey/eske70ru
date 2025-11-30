@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'projects',
 ]
 
+OPEN_WEATHER_TOKEN = '59bdb9972b4f4e4972d35cea19ffb337'
+
 SITE_ID = 1  # Укажите ID вашего сайта
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

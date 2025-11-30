@@ -1,0 +1,50 @@
+{% load static %}
+
+
+    <div class="weather-widget">
+        <div class="weather-header">
+            <h2>Погода</h2>
+            <button id="refresh-btn">🔄</button>
+        </div>
+        
+        <div class="weather-content">
+            <div class="location">
+                <span id="city-name">Загрузка...</span>
+            </div>
+            
+            <div class="current-weather">
+                <div class="temperature">
+                    <span id="temp">--</span>
+                    <span class="unit">°C</span>
+                </div>
+                <div class="weather-icon">
+                    <img id="weather-icon" src="" alt="">
+                </div>
+            </div>
+            
+            <div class="weather-details">
+                <div class="detail">
+                    <span>💧 Влажность:</span>
+                    <span id="humidity">--%</span>
+                </div>
+                <div class="detail">
+                    <span>💨 Ветер:</span>
+                    <span id="wind">-- м/с</span>
+                </div>
+                <div class="detail">
+                    <span>📝 Описание:</span>
+                    <span id="description">--</span>
+                </div>
+            </div>
+            
+            <div class="forecast" id="forecast">
+                <!-- Прогноз на 5 дней будет здесь -->
+            </div>
+        </div>
+        
+        <div class="error-message" id="error-message" style="display: none;">
+            Не удалось загрузить данные о погоде
+        </div>
+    </div>
+
+    <script src="{% static 'js/weather.js' %}"></script>

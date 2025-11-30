@@ -9,6 +9,7 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
     <script src="{% static 'js/comments.js' %}"></script>
+    <script src="{% static 'js/weather.js' %}"></script>
     <link rel="icon" href="data:;base64,=">
      <script>
         // Функция для обновления времени
@@ -76,8 +77,8 @@
                               <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'view_projects' %}">Проекты</a></li>
 
-    <!--                            <li><hr class="dropdown-divider"></li>-->
-    <!--                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
+<!--                                <li><hr class="dropdown-divider"></li>-->
+<!--                                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
                               </ul>
                             </li>
 
@@ -146,10 +147,7 @@
             <div class="col-2 ">
 
                     <div class="card">
-                      <img src="..." class="card-img-top" alt="...">
-
-<!--                        <div id="clock">{{ current_time }}</div>-->
-
+                         {% include 'main/rightcolumn.html' %}
 
                     </div>
 

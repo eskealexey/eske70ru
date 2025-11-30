@@ -38,23 +38,23 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-sm-4 text-muted fw-bold">Дата:</div>
+                        <div class="col-sm-4 text-muted fw-bold">Дата публикации:</div>
                         <div class="col-sm-8">
                             <span class="badge bg-secondary">{{ project.created_at|date:"d.m.Y H:i" }}</span>
                         </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-sm-4 text-muted fw-bold">Автор:</div>
-                        <div class="col-sm-8">
-                            <span class="badge bg-info text-dark">
-                                {% if project.author.first_name or project.author.last_name %}
-                                    {{ project.author.first_name }} {{ project.author.last_name }}
-                                {% else %}
-                                    {{ project.author }}
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
+<!--                    <div class="row mb-2">-->
+<!--                        <div class="col-sm-4 text-muted fw-bold">Автор:</div>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <span class="badge bg-info text-dark">-->
+<!--                                {% if project.author.first_name or project.author.last_name %}-->
+<!--                                    {{ project.author.first_name }} {{ project.author.last_name }}-->
+<!--                                {% else %}-->
+<!--                                    {{ project.author }}-->
+<!--                                {% endif %}-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="row mb-2">
                         <div class="col-sm-4 text-muted fw-bold">Просмотров:</div>
                         <div class="col-sm-8">

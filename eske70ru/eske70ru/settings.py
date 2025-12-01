@@ -57,9 +57,10 @@ INSTALLED_APPS = [
     'accounts',
     'programs',
     'projects',
+    'calc',
 ]
 
-OPEN_WEATHER_TOKEN = '59bdb9972b4f4e4972d35cea19ffb337'
+# OPEN_WEATHER_TOKEN = '59bdb9972b4f4e4972d35cea19ffb337'
 
 SITE_ID = 1  # Укажите ID вашего сайта
 

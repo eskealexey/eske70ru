@@ -1,14 +1,10 @@
 {% extends 'index_template.html' %}
 
-
-
-{% block title %}Калькулятор закона Ома{% endblock %}
-
 {% block content %}
 <div class="row">
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-header bg-info text-white">
+        <div class="card mt-3">
+            <div class="card-header bg-success text-white">
                 <h4>Калькулятор закона Ома</h4>
                 <p class="mb-0">U = I × R (Напряжение = Ток × Сопротивление)</p>
             </div>
@@ -41,7 +37,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Рассчитать</button>
-                    <button type="reset" class="btn btn-secondary">Очистить</button>
+                    <a href="{% url 'zakon_oma' %}" class="btn btn-secondary">Очистить</a>
                 </form>
 
                 {% if result is not None %}
@@ -58,6 +54,10 @@
                             Сопротивление (R) = <strong>{{ result|floatformat:2 }} Ом</strong><br>
                             <small>R = U / I = {{ form.cleaned_data.voltage }} / {{ form.cleaned_data.current }}</small>
                         {% endif %}
+                    </p>
+                    <p class="mb-0">
+                        Мощность (P) = <strong>{{ power|floatformat:2 }} Вт</strong><br>
+                        <small>P = U * I </small>
                     </p>
                 </div>
                 {% endif %}

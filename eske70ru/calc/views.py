@@ -35,9 +35,9 @@ def zakon_oma(request):
                 result = voltage / current
                 calculated_field = 'resistance'
                 resistance = result
-            power = voltage * current
-            messages.success(request, f'Рассчитано: {calculated_field} = {result:.2f}')
 
+            messages.success(request, f'Рассчитано: {calculated_field} = {result:.2f}')
+            power = voltage * current
     else:
         form = OhmLawForm()
 
@@ -48,5 +48,5 @@ def zakon_oma(request):
         'result': result,
         'calculated_field': calculated_field,
         'power': power,
-    })
+        })
 

@@ -1,3 +1,4 @@
+
 {% extends 'index_template.html' %}
 
 {% block content %}
@@ -40,25 +41,39 @@
                     <a href="{% url 'zakon_oma' %}" class="btn btn-secondary">Очистить</a>
                 </form>
 
+                <!-- Отображение результата и мощности -->
                 {% if result is not None %}
                 <div class="alert alert-success mt-3">
                     <h5>Результат:</h5>
                     <p class="mb-0">
                         {% if calculated_field == 'voltage' %}
-                            Напряжение (U) = <strong>{{ result|floatformat:2 }} В</strong><br>
-                            <small>U = I × R = {{ form.cleaned_data.current }} × {{ form.cleaned_data.resistance }}</small>
+                            <strong>Напряжение (U)</strong> = {{ result|floatformat:2 }} В<br>
+                            <small>U = I × R = {{ form.initial.current }} × {{ form.initial.resistance }}</small>
                         {% elif calculated_field == 'current' %}
-                            Сила тока (I) = <strong>{{ result|floatformat:2 }} А</strong><br>
-                            <small>I = U / R = {{ form.cleaned_data.voltage }} / {{ form.cleaned_data.resistance }}</small>
+                            <strong>Сила тока (I)</strong> = {{ result|floatformat:2 }} А<br>
+                            <small>I = U / R = {{ form.initial.voltage }} / {{ form.initial.resistance }}</small>
                         {% elif calculated_field == 'resistance' %}
-                            Сопротивление (R) = <strong>{{ result|floatformat:2 }} Ом</strong><br>
-                            <small>R = U / I = {{ form.cleaned_data.voltage }} / {{ form.cleaned_data.current }}</small>
+                            <strong>Сопротивление (R)</strong> = {{ result|floatformat:2 }} Ом<br>
+                            <small>R = U / I = {{ form.initial.voltage }} / {{ form.initial.current }}</small>
                         {% endif %}
                     </p>
-                    <p class="mb-0">
-                        Мощность (P) = <strong>{{ power|floatformat:2 }} Вт</strong><br>
-                        <small>P = U * I </small>
+                    {% if power is not None %}
+                    <p class="mb-0 mt-2">
+                        <strong>Мощность (P)</strong> = {{ power|floatformat:2 }} Вт<br>
+                        <small>P = U × I</small>
                     </p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Сообщения об ошибках -->
+                {% if messages %}
+                <div class="mt-3">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
             </div>
@@ -73,11 +88,11 @@
             <div class="card-body">
                 <p><strong>Закон Ома для участка цепи:</strong></p>
                 <ul>
-                    <li><strong>U = I × R</strong> (Напряжение = Ток × Сопротивление)</li>
-                    <li><strong>I = U / R</strong> (Ток = Напряжение / Сопротивление)</li>
-                    <li><strong>R = U / I</strong> (Сопротивление = Напряжение / Ток)</li>
+                    <li><strong>U = I × R</strong> — Напряжение = Ток × Сопротивление</li>
+                    <li><strong>I = U / R</strong> — Ток = Напряжение / Сопротивление</li>
+                    <li><strong>R = U / I</strong> — Сопротивление = Напряжение / Ток</li>
                 </ul>
-                <p class="mb-0"><small>Для расчета введите любые два известных параметра.</small></p>
+                <p class="mb-0"><small>Введите значения ровно для двух параметров, третий будет рассчитан автоматически.</small></p>
             </div>
         </div>
     </div>

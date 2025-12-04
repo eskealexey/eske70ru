@@ -48,13 +48,13 @@
                     <p class="mb-0">
                         {% if calculated_field == 'voltage' %}
                             <strong>Напряжение (U)</strong> = {{ result|floatformat:2 }} В<br>
-                            <small>U = I × R = {{ form.initial.current }} × {{ form.initial.resistance }}</small>
+                            <small>U = I × R</small>
                         {% elif calculated_field == 'current' %}
                             <strong>Сила тока (I)</strong> = {{ result|floatformat:2 }} А<br>
-                            <small>I = U / R = {{ form.initial.voltage }} / {{ form.initial.resistance }}</small>
+                            <small>I = U / R</small>
                         {% elif calculated_field == 'resistance' %}
                             <strong>Сопротивление (R)</strong> = {{ result|floatformat:2 }} Ом<br>
-                            <small>R = U / I = {{ form.initial.voltage }} / {{ form.initial.current }}</small>
+                            <small>R = U / I</small>
                         {% endif %}
                     </p>
                     {% if power is not None %}

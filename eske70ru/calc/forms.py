@@ -31,86 +31,7 @@ class OhmLawForm(forms.Form):
             raise forms.ValidationError("Необходимо заполнить ровно два поля из трех!")
 
         return cleaned_data
-#
-# class VoltageDividerForm(forms.Form):
-#     voltage_input = forms.FloatField(
-#         required=False,
-#         label="Напряжение (В)",
-#         widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'})
-#     )
-#     resistance_1 = forms.FloatField(
-#         required=False,
-#         label="Сопротивление R1 (Ом)",
-#         widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1', 'placeholder': 'Например: 10.0'})
-#     )
-#     resistance_2 = forms.FloatField(
-#         required=False,
-#         label="Сопротивление R2 (Ом)",
-#         widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1', 'placeholder': 'Например: 10.0'})
-#     )
-#     resistance_load = forms.FloatField(
-#         required=False,
-#         label="Сопротивление нагрузки (Ом)",
-#         widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1', 'placeholder': 'Например: 10.0'}))
-#
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         for field_name, value in cleaned_data.items():
-#             if value is not None and value < 0:
-#                 self.add_error(field_name, "Значение не может быть отрицательным.")
-#         return cleaned_data
-#
-#
-# /eske70ru/calc/forms.py
-# from django import forms
-#
-# class VoltageDividerForm(forms.Form):
-#     voltage_input = forms.FloatField(
-#         required=False,
-#         label="Напряжение питания (В)",
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'step': '0.1',
-#             'placeholder': 'Например: 5.0'
-#         })
-#     )
-#     resistance_1 = forms.FloatField(
-#         required=False,
-#         label="Сопротивление R1 (Ом)",
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'step': '0.1',
-#             'placeholder': 'Например: 1000.0'
-#         })
-#     )
-#     resistance_2 = forms.FloatField(
-#         required=False,
-#         label="Сопротивление R2 (Ом)",
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'step': '0.1',
-#             'placeholder': 'Например: 1000.0'
-#         })
-#     )
-#     resistance_load = forms.FloatField(
-#         required=False,
-#         label="Сопротивление нагрузки (Ом)",
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'step': '0.1',
-#             'placeholder': 'Например: 5000.0'
-#         })
-#     )
-#
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         for field_name, value in cleaned_data.items():
-#             if value is not None and value < 0:
-#                 self.add_error(field_name, "Значение не может быть отрицательным.")
-#         return cleaned_data
 
-# /eske70ru/calc/forms.py
-from django import forms
 
 class VoltageDividerForm(forms.Form):
     # Основные параметры
@@ -170,4 +91,62 @@ class VoltageDividerForm(forms.Form):
         if v_in and v_out and v_out < 0:
             self.add_error('voltage_output', "V_out не может быть отрицательным.")
 
+        return cleaned_data
+
+
+class ADCCalculatorForm(forms.Form):
+    # Основные параметры АЦП
+    resolution = forms.IntegerField(
+        label="Разрядность АЦП (биты)",
+        min_value=1,
+        max_value=32,
+        initial=12,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '1'})
+    )
+
+    vref = forms.FloatField(
+        label="Опорное напряжение, Vref (Вольты)",
+        min_value=0.1,
+        initial=3.3,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'})
+    )
+
+    vmin = forms.FloatField(
+        label="Минимальное напряжение (Вольты)",
+        initial=0,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'})
+    )
+
+    # Входной сигнал
+    analog_voltage = forms.FloatField(
+        label="Аналоговое входное напряжение (Вольты)",
+        min_value=0,
+        initial=1.65,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'})
+    )
+
+    # Дополнительные параметры
+    sampling_rate = forms.FloatField(
+        label="Частота дискретизации (Гц)",
+        min_value=1,
+        initial=100000,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '1000'})
+    )
+
+    signal_frequency = forms.FloatField(
+        label="Частота сигнала (Гц)",
+        min_value=0.1,
+        initial=1000,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '100'})
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        vmin = cleaned_data.get('vmin', 0)
+        vref = cleaned_data.get('vref')
+
+        if vref and vmin >= vref:
+            raise forms.ValidationError('Минимальное напряжение должно быть меньше опорного.')
         return cleaned_data

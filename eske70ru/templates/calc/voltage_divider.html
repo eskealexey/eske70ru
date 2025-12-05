@@ -5,94 +5,91 @@
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-lg-9 col-md-10">
+    <div class="col-lg-12 col-md-10">
 
       <!-- Заголовок -->
       <div class="text-center bg-success p-4 rounded-3 mb-4 shadow-sm" style="border: 1px solid #dee2e6;">
-        <h3 class="fw-semibold text-white">
+        <h4 class="fw-semibold text-white">
           <i class="bi bi-lightning-charge me-2"></i>
-          Калькулятор делителя напряжения
-        </h3>
+          Расчет делителя напряжения
+        </h4>
 
       </div>
 
       <div class="row g-4">
         <!-- Форма -->
-        <!-- Форма -->
-<div class="col-md-5">
-  <div class="card shadow-sm border-0">
-    <div class="card-body p-4">
-      <form method="post">
-        {% csrf_token %}
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-2">
+              <form method="post">
+                {% csrf_token %}
 
-        {% for field in form %}
-          <div class="mb-3">
-            <label for="{{ field.id_for_label }}" class="form-label fw-medium">
-              {{ field.label }}
-            </label>
-            {{ field }}
-            {% if field.errors %}
-              <div class="text-danger small mt-1">{{ field.errors }}</div>
-            {% endif %}
+                {% for field in form %}
+                  <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label fw-medium">
+                      {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                      <div class="text-danger small mt-1">{{ field.errors }}</div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+
+                <!-- Кнопки: Рассчитать и Очистить -->
+        <div class="d-grid gap-2 d-flex">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-calculator me-1"></i> Рассчитать
+          </button>
+            <a href="{% url 'voltagedivider' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-counterclockwise"></i> Сбросить
+            </a>
+
+        </div>
+              </form>
+            </div>
           </div>
-        {% endfor %}
 
-        <!-- Кнопки: Рассчитать и Очистить -->
-<div class="d-grid gap-2 d-flex">
-  <button type="submit" class="btn btn-primary">
-    <i class="bi bi-calculator me-1"></i> Рассчитать
-  </button>
-    <a href="{% url 'voltagedivider' %}" class="btn btn-outline-secondary">
-      <i class="bi bi-arrow-counterclockwise"></i> Сбросить
-    </a>
+          <!-- Ошибки и результаты -->
+          {% if error %}
+            <div class="alert alert-danger mt-3 text-center" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              {{ error }}
+            </div>
+          {% endif %}
 
-</div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Ошибки и результаты -->
-  {% if error %}
-    <div class="alert alert-danger mt-3 text-center" role="alert">
-      <i class="bi bi-exclamation-triangle me-2"></i>
-      {{ error }}
-    </div>
-  {% endif %}
-
-  {% if result %}
-    <div class="alert alert-success mt-3 text-center" role="alert">
-      <h6 class="mb-1">Результат</h6>
-      <p class="mb-0 small">{{ result|safe }}</p>
-    </div>
-  {% endif %}
-</div>
+          {% if result %}
+            <div class="alert alert-success mt-3 text-center" role="alert">
+              <h6 class="mb-1">Результат</h6>
+              <p class="mb-0 small">{{ result|safe }}</p>
+            </div>
+          {% endif %}
+        </div>
 
 
         <!-- Схема -->
-       <div class="col-md-7">
-  <div class="bg-light p-4 rounded-3 shadow-sm h-100 d-flex flex-column" style="border: 1px solid #dee2e6;">
-    <h6 class="text-center mb-3 text-secondary">
-      <i class="bi bi-diagram-3 me-1"></i>
-      Схема делителя напряжения
-    </h6>
-    <div class="d-flex justify-content-center align-items-center flex-grow-1">
-      <img
-        src="{% static 'pic/sxema_volt_div.png' %}"
-        alt="Схема делителя напряжения"
-        class="img-fluid"
-        style="max-width: 100%; max-height: 350px; object-fit: contain;"
-      >
-    </div>
-  </div>
-</div>
+       <div class="col-md-6">
+          <div class="bg-light p-4 rounded-3 shadow-sm h-100 d-flex flex-column" style="border: 1px solid #dee2e6;">
+            <h6 class="text-center mb-3 text-secondary">
+              <i class="bi bi-diagram-3 me-1"></i>
+              Схема делителя напряжения
+            </h6>
+            <div class="d-flex justify-content-center align-items-center flex-grow-1">
+              <img
+                src="{% static 'pic/sxema_volt_div.png' %}"
+                alt="Схема делителя напряжения"
+                class="img-fluid"
+                style="max-width: 100%; max-height: 350px; object-fit: contain;"
+              >
+            </div>
+          </div>
+       </div>
 
       </div>
     </div>
   </div>
 </div>
 
-<!-- Подключение иконок -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 {% endblock %}
 
 {% block scripts %}

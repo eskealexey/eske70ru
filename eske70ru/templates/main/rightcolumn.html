@@ -1,10 +1,10 @@
 <div class="card border-0 shadow-sm">
-  <div class="card-body p-4">
+  <div class="card-body p-2">
     <h5 class="card-title text-primary fw-semibold mb-3 d-flex align-items-center fs-6">
       <i class="bi bi-link-45deg me-2"></i>
       Ссылки
     </h5>
-    <ul class="list-unstyled mb-0">
+    <ul class="list-unstyled mb-0"  style="font-size: 0.8rem;">
       <li class="mb-2">
         <a href="https://github.com/eskealexey/" class="text-decoration-none d-flex align-items-center text-secondary hover-primary">
           <i class="bi bi-github me-2" style="font-size: 1.1rem;"></i>
@@ -15,12 +15,11 @@
     </ul>
   </div>
 
-  <div class="card-body p-4">
+  <div class="card-body p-2">
     <h5 class="card-title text-primary fw-semibold mb-3 d-flex align-items-center fs-6">
-      <i class="bi bi-link-45deg me-2"></i>
       Калькуляторы
     </h5>
-    <ul class="list-unstyled mb-0">
+    <ul class="list-unstyled mb-0" style="font-size: 0.8rem;">
       <li class="mb-2">
         <a href="{% url 'zakon_oma' %}" class="text-decoration-none d-flex align-items-center text-secondary hover-primary">
           <i class="bi bi-meteor me-2" style="font-size: 1.1rem;"></i>
@@ -35,7 +34,13 @@
         </a>
           <hr>
       </li>
-
+      <li class="mb-2">
+        <a href="{% url 'adc_calculator' %}" class="text-decoration-none d-flex align-items-center text-secondary hover-primary">
+          <i class="bi bi-meteor me-2" style="font-size: 1.1rem;"></i>
+          <span class="fw-medium">АЦП калькулятор</span>
+        </a>
+          <hr>
+      </li>
     </ul>
   </div>
 

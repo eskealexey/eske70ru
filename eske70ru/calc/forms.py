@@ -10,12 +10,12 @@ class OhmLawForm(forms.Form):
     current = forms.FloatField(
         required=False,
         label="Сила тока (А)",
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'})
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'})
     )
     resistance = forms.FloatField(
         required=False,
         label="Сопротивление (Ом)",
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'})
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'})
     )
 
     def clean(self):

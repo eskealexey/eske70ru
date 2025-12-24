@@ -79,13 +79,13 @@
     <!-- Файлы проекта -->
 <div class="card mb-4 shadow-sm">
     <div class="card-body">
-        <h4 class="card-title">
+        <h5 class="card-title">
             <i class="fas fa-file-alt me-2"><u> Файлы проекта</u></i>
 
             {% if files_count > 0 %}
                 <span class="badge bg-secondary">{{ files_count }}</span>
             {% endif %}
-        </h4>
+        </h5>
 
         {% if files_count > 0 %}
             {% for file_type, data in files_by_type.items %}

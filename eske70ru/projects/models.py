@@ -148,6 +148,7 @@ class ProjectFile(models.Model):
         ('firmware', 'Прошивка'),
         ('model', '3D-модель'),
         ('image', 'Изображение'),
+        ('arxiv', 'Архив проекта'),
         ('other', 'Другое'),
     ]
 
